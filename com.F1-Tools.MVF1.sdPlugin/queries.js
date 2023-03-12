@@ -24,3 +24,30 @@ graphql(`
         });
     }
 });
+
+graphql(`
+		query Players {
+            players {
+                streamData {
+                    title
+                }
+			    id
+                state {
+                    paused
+                }
+            }
+		}
+	`).then((json) => {
+        const commentary = json.data.players.find((p) => p.streamData.title === "INTERNATIONAL" || p.streamData.title === "F1 LIVE");
+        let new_state = !commentary.state.paused || !json.data.players[0].state.paused;
+
+		for (const player of json.data.players) {
+			graphql(`
+				mutation PlayerSetPaused($playerSetPausedId: ID!, $paused: Boolean) {
+					playerSetPaused(id: $playerSetPausedId, paused: $paused)
+				}
+			`, { playerSetPausedId: player.id, paused: new_state }).then((json) => {
+				console.log(json);
+			});
+		}
+	});

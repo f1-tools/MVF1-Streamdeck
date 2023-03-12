@@ -1,7 +1,7 @@
 // take graphql query and return json using fetch
 
 module.exports = async function (query, variables) {
-    const response = await fetch('http://192.168.48.1:10101/api/graphql', {
+    const response = await fetch('http://127.0.0.1:10101/api/graphql', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
