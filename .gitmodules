@@ -1,3 +1,0 @@
-[submodule "src/com.F1-Tools.MVF1.sdPlugin/libs"]
-	path = src/com.F1-Tools.MVF1.sdPlugin/libs
-	url = https://github.com/elgatosf/streamdeck-javascript-sdk
