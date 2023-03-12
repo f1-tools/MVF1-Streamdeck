@@ -1,6 +1,6 @@
 // collection of graphQL queries
 
-import { graphql } from "./graphql.js";
+const graphql = require("./graphql");
 
 graphql(`
     query Players {
