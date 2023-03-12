@@ -8,11 +8,25 @@
  */
 $SD.onConnected(({ actionInfo, appInfo, connection, messageType, port, uuid }) => {
 	console.log('Stream Deck connected!');
+	graphql(`
+		query Players {
+			players {
+				streamData {
+					title
+				}
+			}
+		}
+	`).then((json) => {
+		for (const player of json.data.players) {
+			console.log(player.streamData.title);
+		}
+	});
 });
 
 
-const SyncToDialogue = new Action('com.F1-Tools.MVF1.SyncToDialogue');
+const SyncToDialogue = new Action('com.f1-tools.mvf1.synctodialogue');
 SyncToDialogue.onKeyUp(({ action, context, device, event, payload }) => {
+	console.log("Syncing to dialogue");
 	graphql(`
 		query Players {
 			players {
@@ -37,8 +51,9 @@ SyncToDialogue.onKeyUp(({ action, context, device, event, payload }) => {
 	});
 });
 
-const PlayPauseAll = new Action('com.F1-Tools.MVF1.PlayPauseAll');
+const PlayPauseAll = new Action('com.f1-tools.mvf1.playpauseall');
 PlayPauseAll.onKeyUp(({ action, context, device, event, payload }) => {
+	console.log("Play/Pause all");
 	graphql(`
 		query Players {
             players {

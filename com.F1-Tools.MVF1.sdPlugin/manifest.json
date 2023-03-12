@@ -33,7 +33,7 @@
 				}
 			],
 			"Tooltip": "Sync all MVF1 feeds to the current dialogue",
-			"UUID": "com.F1-Tools.MVF1.SyncToDialogue"
+			"UUID": "com.f1-tools.mvf1.synctodialogue"
 		},
 		{
 			"Icon": "actions/assets/mv-rounded",
@@ -45,7 +45,7 @@
 				}
 			],
 			"Tooltip": "Toggle Play/Pause of all MVF1 feeds",
-			"UUID": "com.F1-Tools.MVF1.PlayPauseAll"
+			"UUID": "com.f1-tools.mvf1.playpauseall"
 		}
 	]
 }
