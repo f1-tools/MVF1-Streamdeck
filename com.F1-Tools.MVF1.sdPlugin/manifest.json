@@ -1,0 +1,51 @@
+{
+	"SDKVersion": 2,
+	"Author": "F1-Tools",
+	"CodePath": "app.html",
+	"Description": "Streamdeck plugin for controlling Multiviewer for Formula 1",
+	"Name": "MVF1",
+	"Icon": "actions/assets/action",
+	"URL": "https://github.com/f1-tools/MVF1-Streamdeck",
+	"Version": "1.0.0",
+	"Software": {
+		"MinimumVersion": "5.0"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "10.11"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Category": "MVF1",
+	"CategoryIcon": "actions/assets/mv-rounded",
+	"Actions": [
+		{
+			"Icon": "actions/assets/mv-rounded",
+			"Name": "Sync To Dialogue",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "actions/assets/mv-rounded"
+				}
+			],
+			"Tooltip": "Sync all MVF1 feeds to the current dialogue",
+			"UUID": "com.F1-Tools.MVF1.SyncToDialogue"
+		},
+		{
+			"Icon": "actions/assets/mv-rounded",
+			"Name": "Play/Pause",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "actions/assets/mv-rounded"
+				}
+			],
+			"Tooltip": "Toggle Play/Pause all MVF1 feeds to the current dialogue",
+			"UUID": "com.F1-Tools.MVF1.PlayPause"
+		}
+	]
+}
