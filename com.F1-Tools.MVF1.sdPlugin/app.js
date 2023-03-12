@@ -1,7 +1,7 @@
 /// <reference path="libs/js/action.js" />
 /// <reference path="libs/js/stream-deck.js" />
 
-const graphql = require("./graphql");
+import { graphql } from "./graphql.js";
 
 /**
  * The first event fired when Stream Deck starts
