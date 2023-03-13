@@ -14,7 +14,7 @@ if [[ "$os" == "Linux" ]]; then
         fi
     done
 
-    cp -r com.F1-Tools.MVF1.sdPlugin "$path/AppData/Roaming/Elgato/StreamDeck/Plugins"
+    cp -r com.f1-tools.mvf1.sdPlugin "$path/AppData/Roaming/Elgato/StreamDeck/Plugins"
 
     # kill streamdeck using powershell
     powershell.exe -Command "Stop-Process -Name 'StreamDeck'"

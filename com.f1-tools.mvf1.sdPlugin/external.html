@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>com.elgato.template.externalWindow</title>
+		<title>com.f1-tools.mvf1.externalWindow</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="libs/css/sdpi.css" />
 		<style>
@@ -46,9 +46,9 @@
 
 	<body>
 		<div class="sdpi-wrapper">
-			<div class="sdpi-heading">INFORMATION</div>
+			<div class="sdpi-heading">MVF1 Global Settings</div>
 			<div class="wrap">
-				<p>
+				<p id="css-stuff">
 					In your external window you can either place your own
 					designs, or simply use the built-in sdpi.css to style your
 					content.
@@ -56,15 +56,26 @@
 			</div>
 
 			<div class="wrap">
-				<button id="send" type="button" value="Click here">
-					Click here
+				<form >
+					<div class="sdpi-item-label">API base URL found in the bottom of MVF1's settings tab</div>
+					<div class="sdpi-item">
+						<input
+							class="sdpi-item-value"
+							name="url"
+							type="text"
+							id="url"
+							value=""
+							placeholder="http://127.0.0.1:10101/api/graphql"
+						/>
+					</div>
+				</form>
+				<button id="send" type="button" value="Save Settings">
+					Save Settings
 				</button>
-				<p>
-					Clicking the button sends some information to your Property
-					Inspector. Just open the remote-debugger for your Property
-					Inspector and watch the console.
-				</p>
 			</div>
+			<details class="message caution hidden" id="message-container">
+				<summary id="error-message"></summary>
+			</details>
 		</div>
 
 		<script src="external.js"></script>

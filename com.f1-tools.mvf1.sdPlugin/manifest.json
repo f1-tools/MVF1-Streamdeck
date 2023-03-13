@@ -32,8 +32,9 @@
 					"Image": "actions/assets/mv-rounded"
 				}
 			],
+			"PropertyInspectorPath": "actions/property-inspector/default.html",
 			"Tooltip": "Sync all MVF1 feeds to the current dialogue",
-			"UUID": "com.f1-tools.mvf1.synctodialogue"
+			"UUID": "com.f1-tools.mvf1.sync-to-dialogue"
 		},
 		{
 			"Icon": "actions/assets/mv-rounded",
@@ -44,8 +45,35 @@
 					"Image": "actions/assets/mv-rounded"
 				}
 			],
+			"PropertyInspectorPath": "actions/property-inspector/default.html",
 			"Tooltip": "Toggle Play/Pause of all MVF1 feeds",
-			"UUID": "com.f1-tools.mvf1.playpauseall"
+			"UUID": "com.f1-tools.mvf1.play-pause-all"
+		},
+		{
+			"Icon": "actions/assets/mv-rounded",
+			"Name": "Rewind All Feeds",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "actions/assets/mv-rounded"
+				}
+			],
+			"PropertyInspectorPath": "actions/property-inspector/rewind.html",
+			"Tooltip": "Rewind all MVF1 feeds by x seconds",
+			"UUID": "com.f1-tools.mvf1.rewind-all"
+		},
+		{
+			"Icon": "actions/assets/mv-rounded",
+			"Name": "Fast Forward All Feeds",
+			"Controllers": ["Keypad"],
+			"States": [
+				{
+					"Image": "actions/assets/mv-rounded"
+				}
+			],
+			"PropertyInspectorPath": "actions/property-inspector/fast-forward.html",
+			"Tooltip": "Fast Forward all MVF1 feeds by x seconds",
+			"UUID": "com.f1-tools.mvf1.fast-forward-all"
 		}
 	]
 }
