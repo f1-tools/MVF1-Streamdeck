@@ -1,8 +1,6 @@
 /// <reference path="../../libs/js/property-inspector.js" />
 /// <reference path="../../libs/js/utils.js" />
 
-let pi_uuid = '';
-
 let window_data = {
     connected: true,
     message: 'Connected to MVF1',
@@ -31,19 +29,26 @@ function sendTest() {
     $PI.sendToPlugin({data: false});
 }
 
+function openURL(url) {
+    $PI.openUrl(url);
+}
+
 $PI.onConnected((jsn) => {
-    const form = document.querySelector('#property-inspector');
     const {actionInfo, appInfo, connection, messageType, port, uuid} = jsn;
-    const {payload, context} = actionInfo;
-    const {settings} = payload;
+    const {action, payload, context} = actionInfo;
+    const {settings, coordinates} = payload;
 
-    //$PI.logMessage(JSON.stringify(jsn));
+    let action_uuid = action.split('.')[3] || false;
 
-    pi_uuid = uuid;
+    const form = document.getElementById(action_uuid) || false;
 
-    if (form && settings) {
-        Utils.setFormValue(settings, form);
+    $PI.onSendToPropertyInspector(action, ({payload}) => { showError(payload); });
 
+    if (form) {
+        if (settings) {
+            Utils.setFormValue(settings, form);
+        }
+        form.style.display = 'unset';
         form.addEventListener(
             'input',
             Utils.debounce(150, () => {
@@ -57,11 +62,6 @@ $PI.onConnected((jsn) => {
 
     $PI.getGlobalSettings();
 });
-
-$PI.onSendToPropertyInspector('com.f1-tools.mvf1.rewind-all', ({payload}) => { showError(payload); });
-$PI.onSendToPropertyInspector('com.f1-tools.mvf1.fast-forward-all', ({payload}) => { showError(payload); });
-$PI.onSendToPropertyInspector('com.f1-tools.mvf1.sync-to-dialogue', ({payload}) => { showError(payload); });
-$PI.onSendToPropertyInspector('com.f1-tools.mvf1.play-pause-all', ({payload}) => { showError(payload); });
 
 $PI.onDidReceiveGlobalSettings(({payload}) => {
     if (payload.settings) {

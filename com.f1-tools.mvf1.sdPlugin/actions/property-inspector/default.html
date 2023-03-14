@@ -14,22 +14,65 @@
 
 <body>
     <div class="sdpi-wrapper">
-        <div class="sdpi-header">
-            <hr>
-            <details class="message caution hidden" id="message-container">
-				<summary id="error-message"></summary>
-			</details>
+        <div id="property-inspector">
+            <form id="fast-forward-all">
+                <div class="sdpi-heading">Fast Forward</div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label" title="Fast Forward Duration">
+                        Duration
+                    </div>
+                    <input 
+                        class="sdpi-item-value" 
+                        name="fastForwardSeconds" 
+                        type="number" 
+                        value="10" 
+                        placeholder="Duration to seek forwards (in seconds)"
+                        required
+                    />
+                </div>
+            </form>
+            <form id="rewind-all">
+                <div class="sdpi-heading">Rewind</div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label" title="Rewind Duration">
+                        Duration
+                    </div>
+                    <input
+                        class="sdpi-item-value" 
+                        name="rewindSeconds" 
+                        type="number" 
+                        value="10" 
+                        placeholder="Duration to seek backwards (in seconds)"
+                        required
+                    />
+                </div>
+            </form>
         </div>
+        <br>
+        <br>
+        <div class="sdpi-heading">Global Plugin Settings</div>
+        <details class="message caution hidden" id="message-container">
+            <summary id="error-message"></summary>
+        </details>
+        <details class="message info hidden" id="message2-container">
+            <summary id="error-message2"></summary>
+        </details>
         <div class="sdpi-item">
-            <div class="sdpi-item-label" data-localize title="Plugin Settings">MVF1 Global Plugin Settings</div>
             <button
-                    class="sdpi-item-value"
-                    value="Modify/View Settings"
-                    data-localize
-                    id="open-external">
-                Modify/View Settings
+                class="sdpi-item-value"
+                value="Modify/View Settings"
+                id="open-external">
+                Modify/View Global Settings 
             </button>
         </div>
+        <details>
+            <summary>More Info</summary>
+            <p>We hope you enjoy our MVF1 Stream Deck plugin!</p>
+            <p>To help our development, continue turning on analytics in the global plugin settings, so that we can help improve this plugin.</p>
+            <p>For issues and feature requests, please <a onclick='openURL("https://github.com/f1-tools/mvf1-streamdeck/issues")'>create an issue on our GitHub</a></p>
+            <p>To further support this plugin, please consider <a onclick='openURL("https://github.com/f1-tools/mvf1-streamdeck#sponsor")'>leaving us a star on GitHub, or donating.</a></p>
+            <p>Want to share your config and setup? Or chat with us about more plugin ideas and improvements? <a onclick="openURL('https://f1-tools.github.io/discord?utm_source=streamdeck&utm_medium=plugin&utm_campaign=more_info')">Join our Discord!</a></p>
+        </details>
     </div>
 
     <div class="sdpi-info-label hidden" style="top: -1000" value=""></div>

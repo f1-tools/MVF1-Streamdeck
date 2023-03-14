@@ -4,75 +4,83 @@
 		<title>com.f1-tools.mvf1.externalWindow</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="libs/css/sdpi.css" />
-		<style>
-			body {
-				background-color: transparent;
-			}
-
-			.sdpi-item {
-				max-width: none;
-			}
-
-			.sdpi-heading {
-				margin: 16px 0;
-			}
-
-			ul {
-				max-height: none;
-			}
-			li * {
-				min-height: 18px;
-				padding: 4px;
-				display: flex;
-				align-items: center;
-			}
-
-			.wrap {
-				margin: 8px;
-			}
-			.title {
-				font-weight: bold;
-				padding-bottom: 2px;
-				margin-bottom: 6px;
-				border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-				text-transform: uppercase;
-			}
-
-			.wrap {
-				text-align: center;
-			}
-		</style>
 	</head>
 
 	<body>
 		<div class="sdpi-wrapper">
 			<div class="sdpi-heading">MVF1 Global Settings</div>
-			<div class="wrap">
-				<p id="css-stuff">
-					In your external window you can either place your own
-					designs, or simply use the built-in sdpi.css to style your
-					content.
-				</p>
-			</div>
-
-			<div class="wrap">
-				<form >
-					<div class="sdpi-item-label">API base URL found in the bottom of MVF1's settings tab</div>
-					<div class="sdpi-item">
-						<input
-							class="sdpi-item-value"
-							name="url"
-							type="text"
-							id="url"
-							value=""
-							placeholder="http://127.0.0.1:10101/api/graphql"
-						/>
+			<form >
+				<div type="group" class="sdpi-item" id="network-group">
+					<div class="sdpi-item-label">API Configuration</div>
+					<div class="sdpi-item-group" id="network-group-items">
+						<div class="sdpi-item">
+							<div class="sdpi-item-label">API base URL</div>
+							<input
+								class="sdpi-item-value"
+								name="url"
+								type="text"
+								id="url"
+								value=""
+								placeholder="http://127.0.0.1:10101/api/graphql"
+								required
+							/>
+						</div>
+						<div class="sdpi-item">
+							<div class="sdpi-item-label">Timeout (ms)</div>
+							<input
+								class="sdpi-item-value"
+								name="timeout-delay"
+								type="number"
+								id="timeout-delay"
+								value=""
+								placeholder="300"
+								required
+							/>
+						</div>
+						<details>
+							<summary>What do these values mean?</summary>
+							<p>
+								These values are used to configure the Stream Deck's connection to the MVF1 API.
+							</p>
+							<p>
+								The base URL is the URL of the MVF1 API. Find this by scrolling all the way to the bottom of the settings page of MVF1. It defaults to http://localhost:10101/api/graphql/
+							</p>
+							<p>
+								The timeout is the number of milliseconds to wait before timing out. If the MVF1 API is not responding, the plugin will wait this long before giving up. This defaults to 300ms.
+						</details>
 					</div>
-				</form>
-				<button id="send" type="button" value="Save Settings">
-					Save Settings
-				</button>
-			</div>
+				</div>
+				<div type="group" class="sdpi-item" id="analytics-group">
+					<div class="sdpi-item-label">Analytics Configuration</div>
+					<div class="sdpi-item-group" id="analytics-group-items">
+						<div type="checkbox" class="sdpi-item">
+							<div class="sdpi-item-label">Allow Analytics</div>
+							<input class="sdpi-item-value" id="analytics" type="checkbox" value="Opt-In" onchange="console.log(this.checked)">
+							<label for="analytics"><span></span>Opt-In</label>
+						</div>
+						<details>
+							<summary>
+								Allowing analytics helps us improve!
+							</summary>
+							<p>
+								We use analytics to track how many people are using the plugin, and what features are most popular. We can also collect crash reports, which helps us fix bugs.
+							</p>
+							<p>
+								We do not collect any personal information, and we use Google Analytics to collect analytics data. You can opt-out of analytics at any time by unchecking this box.
+							</p>
+						</details>
+					</div>
+				</div>
+				<div type="group" class="sdpi-item" id="ui-group">
+					<div class="sdpi-item-label">MVF1 UI Configuration</div>
+					<div class="sdpi-item-group" id="ui-group-items">
+						
+					</div>
+				</div>
+			</form>
+			<button id="send" type="button" value="Save Settings">
+				Save Settings
+			</button>
 			<details class="message caution hidden" id="message-container">
 				<summary id="error-message"></summary>
 			</details>

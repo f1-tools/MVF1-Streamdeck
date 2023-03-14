@@ -1729,3 +1729,7 @@ select {
 .context-menu_message {
     cursor: default;
 }
+
+#property-inspector form {
+    display: none;
+}

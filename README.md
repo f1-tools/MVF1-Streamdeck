@@ -26,5 +26,4 @@
 - Window arranging
 - Setting to increase network timeout
 - Set icons @jonahhb
-- Make property inspectors and external window css and html prettier @jonahhb
-- Analytics?
+- Analytics? @EricAndrechek
