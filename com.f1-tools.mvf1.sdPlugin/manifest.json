@@ -24,12 +24,12 @@
 	"CategoryIcon": "actions/assets/mv-rounded",
 	"Actions": [
 		{
-			"Icon": "actions/assets/google_icons/sync.png",
+			"Icon": "actions/assets/google_icons/sync",
 			"Name": "Sync To Dialogue",
 			"Controllers": ["Keypad"],
 			"States": [
 				{
-					"Image": "actions/assets/google_icons/sync.png"
+					"Image": "actions/assets/google_icons/sync"
 				}
 			],
 			"PropertyInspectorPath": "actions/property-inspector/default.html",
@@ -37,12 +37,12 @@
 			"UUID": "com.f1-tools.mvf1.sync-to-dialogue"
 		},
 		{
-			"Icon": "actions/assets/google_icons/play_pause.png",
+			"Icon": "actions/assets/google_icons/play_pause",
 			"Name": "Play/Pause All Feeds",
 			"Controllers": ["Keypad"],
 			"States": [
 				{
-					"Image": "actions/assets/google_icons/play_pause.png"
+					"Image": "actions/assets/google_icons/play_pause"
 				}
 			],
 			"PropertyInspectorPath": "actions/property-inspector/default.html",
@@ -50,12 +50,12 @@
 			"UUID": "com.f1-tools.mvf1.play-pause-all"
 		},
 		{
-			"Icon": "actions/assets/google_icons/replay.png",
+			"Icon": "actions/assets/google_icons/replay",
 			"Name": "Rewind All Feeds",
 			"Controllers": ["Keypad"],
 			"States": [
 				{
-					"Image": "actions/assets/google_icons/replay.png"
+					"Image": "actions/assets/google_icons/replay"
 				}
 			],
 			"PropertyInspectorPath": "actions/property-inspector/rewind.html",
@@ -63,12 +63,12 @@
 			"UUID": "com.f1-tools.mvf1.rewind-all"
 		},
 		{
-			"Icon": "actions/assets/google_icons/replay_mirrored.png",
+			"Icon": "actions/assets/google_icons/replay_mirrored",
 			"Name": "Fast Forward All Feeds",
 			"Controllers": ["Keypad"],
 			"States": [
 				{
-					"Image": "actions/assets/google_icons/replay_mirrored.png"
+					"Image": "actions/assets/google_icons/replay_mirrored"
 				}
 			],
 			"PropertyInspectorPath": "actions/property-inspector/fast-forward.html",
