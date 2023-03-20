@@ -52,8 +52,46 @@ const fetchTimeout = async function (data) {
     }
 }
 
+const fetchSlow = async function (data) {
+    const response_promise = fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data)
+    });
+    try {
+        const response = await response_promise;
+        return response;
+    }
+    catch (error) {
+        return { errors: [error] };
+    }
+}
+
 const graphql = async function (query, variables) {
     const fetch_promise = await fetchTimeout({
+        "query": query,
+        "variables": variables
+    });
+    try {
+        const response = await fetch_promise;
+        if (!response.ok) {
+            return { errors: [response.statusText] };
+        }
+        const json = await response.json();
+        if (json.errors) {
+            return { errors: json.errors };
+        }
+        return json;
+    } catch (error) {
+        return { errors: [error] };
+    }
+}
+
+const graphql_slow = async function (query, variables) {
+    const fetch_promise = await fetchSlow({
         "query": query,
         "variables": variables
     });

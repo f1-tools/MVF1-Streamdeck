@@ -55,13 +55,12 @@ const connectionTester = async function(context, action) {
 }
 
 function Syncer(playerId) {
+	$SD.logMessage('Syncing to player ' + playerId);
 	graphql(`
 		mutation PlayerSync($playerSyncId: ID!) {
 			playerSync(id: $playerSyncId)
 		}
-	`, { playerSyncId: playerId }).then((json) => {
-		$SD.showOk(context);
-	});
+	`, { playerSyncId: playerId }).then((json) => {});
 }
 
 function SyncStreams() {
@@ -79,8 +78,6 @@ function SyncStreams() {
 		const player = players.find((p) => p.streamData.title === "INTERNATIONAL" || p.streamData.title === "F1 LIVE");
 		if (player) {
 			Syncer(player.id);
-		} else {
-			$SD.showAlert(context);
 		}
 	});
 }
@@ -247,9 +244,41 @@ function exitTileScreen(device) {
 	// multi_action_device_data[device] = {};
 }
 
-function swapPlayer(oldPlayer, newPlayer, TLA, fn) {
+function waitToSync(id, oldPlayer, oldest_id) {
+	graphql(`
+		query Player($playerId: ID!) {
+			player(id: $playerId) {
+				state {
+					currentTime
+				}
+			}
+		}
+	`, { playerId: id }).then((json) => {
+		let ct = null;
+		try {
+			ct = json.data.player.state.currentTime || null;
+		} catch (e) {}
+		$SD.logMessage("CT: " + ct);
+		if (ct == null || ct == 0 || ct == undefined) {
+			setTimeout(() => {
+				waitToSync(id, oldPlayer, oldest_id);
+			}, 100);
+		} else {
+			// set volume and mute to match old player
+			graphql(`
+				mutation PlayerSetMuted($playerSetMutedId: ID!, $muted: Boolean, $playerSetVolumeId: ID!, $volume: Float!) {
+					playerSetMuted(id: $playerSetMutedId, muted: $muted)
+					playerSetVolume(id: $playerSetVolumeId, volume: $volume)
+				}
+			`, { playerSetMutedId: id, muted: oldPlayer.state.muted, playerSetVolumeId: id, volume: oldPlayer.state.volume }).then((json) => {});
+			Syncer(oldest_id);
+		}
+	});
+}
+
+function swapPlayer(oldPlayer, newPlayer, TLA, oldest_id) {
 	if (TLA) {
-		graphql(`
+		graphql_slow(`
 			mutation PlayerCreate($input: PlayerCreateInput!, $playerDeleteId: ID!) {
 				playerCreate(input: $input)
 				playerDelete(id: $playerDeleteId)
@@ -270,10 +299,10 @@ function swapPlayer(oldPlayer, newPlayer, TLA, fn) {
 			}, 
 			playerDeleteId: oldPlayer.id 
 		}).then((json) => {
-			fn();
+			waitToSync(json.data.playerCreate, oldPlayer, oldest_id);
 		});
 	} else if (!TLA) {
-		graphql(`
+		graphql_slow(`
 			mutation PlayerCreate($input: PlayerCreateInput!, $playerDeleteId: ID!) {
 				playerCreate(input: $input)
 				playerDelete(id: $playerDeleteId)
@@ -294,7 +323,7 @@ function swapPlayer(oldPlayer, newPlayer, TLA, fn) {
 			}, 
 			playerDeleteId: oldPlayer.id 
 		}).then((json) => {
-			fn();
+			waitToSync(json.data.playerCreate, oldPlayer, oldest_id);
 		});
 	} else {
 		$SD.logMessage("No new player TLA or title provided");
@@ -449,15 +478,15 @@ function doTileAction(device, driver) {
 				} else if (player1_playing && !player2_playing) {
 					// player 1 is playing, player 2 is not
 					let is_tla = player2.type === "OBC";
-					swapPlayer(player1, player2.tla, is_tla, Syncer(oldest_id));
+					swapPlayer(player1, player2.tla, is_tla, oldest_id);
 				} else if (!player1_playing && player2_playing) {
 					// player 2 is playing, player 1 is not
 					let is_tla = player1.type === "OBC";
-					swapPlayer(player2, player1.tla, is_tla, Syncer(oldest_id));
+					swapPlayer(player2, player1.tla, is_tla, oldest_id);
 				} else {
 					// both players are playing
-					swapPlayer(player1, player2.streamData.title, false, Syncer(oldest_id));
-					swapPlayer(player2, player1.streamData.title, false, Syncer(oldest_id));
+					swapPlayer(player1, player2.streamData.title, false, oldest_id);
+					swapPlayer(player2, player1.streamData.title, false, oldest_id);
 				}
 			});
 		} else {
