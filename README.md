@@ -14,7 +14,6 @@
 ### Single Action Buttons
 
 - Individual stream volume control and mute/unmute
-- Driver fullscreen
 - Individual stream show speedometer (global setting for it too?)
 
 ### Multi Action Buttons
@@ -23,7 +22,7 @@
 
 ### Other
 
+- Need icon for blank image
+- Global setting to show/hide titles for drivers on their player cards
 - Window arranging
-- Setting to increase network timeout
-- Set icons @jonahhb
-- Analytics? @EricAndrechek
+- Analytics

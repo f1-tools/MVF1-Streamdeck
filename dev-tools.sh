@@ -14,14 +14,22 @@ if [[ "$os" == "Linux" ]]; then
         fi
     done
 
-    cp -r com.f1-tools.mvf1.sdPlugin "$path/AppData/Roaming/Elgato/StreamDeck/Plugins"
-
     # kill streamdeck using powershell
     powershell.exe -Command "Stop-Process -Name 'StreamDeck'"
+
+    # copy plugin
+    cp -r com.f1-tools.mvf1.sdPlugin "$path/AppData/Roaming/Elgato/StreamDeck/Plugins"
 
     # start streamdeck using powershell
     powershell.exe -Command "Start-Process -FilePath 'C:\Program Files\Elgato\StreamDeck\StreamDeck.exe'"
 elif [[ "$os" == "Darwin" ]]; then
     # mac
-    echo "I haven't written the mac script yet."
+    # kill streamdeck
+    pkill -a "Elgato Stream Deck"
+
+    # copy plugin
+    cp -r com.f1-tools.mvf1.sdPlugin ~/Library/Application\ Support/com.elgato.StreamDeck/Plugins
+
+    # start streamdeck
+    open -a "Elgato Stream Deck"
 fi

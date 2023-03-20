@@ -47,9 +47,39 @@
                     />
                 </div>
             </form>
+            <form id="volume-up">
+                <div class="sdpi-heading">Player Volume Up</div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label" title="Volume Increment">
+                        Volume Increment
+                    </div>
+                    <input
+                        class="sdpi-item-value" 
+                        name="volumeUp" 
+                        type="number" 
+                        value="5" 
+                        placeholder="Value to increment volume by"
+                        required
+                    />
+                </div>
+            </form>
+            <form id="volume-down">
+                <div class="sdpi-heading">Player Volume Down</div>
+                <div class="sdpi-item">
+                    <div class="sdpi-item-label" title="Volume Decrement">
+                        Volume Decrement
+                    </div>
+                    <input
+                        class="sdpi-item-value" 
+                        name="volumeDown" 
+                        type="number" 
+                        value="5" 
+                        placeholder="Value to decrement volume by"
+                        required
+                    />
+                </div>
+            </form>
         </div>
-        <br>
-        <br>
         <div class="sdpi-heading">Global Plugin Settings</div>
         <details class="message caution hidden" id="message-container">
             <summary id="error-message"></summary>

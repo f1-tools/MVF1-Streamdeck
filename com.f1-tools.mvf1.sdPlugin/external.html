@@ -4,8 +4,12 @@
 		<title>com.f1-tools.mvf1.externalWindow</title>
 		<meta charset="utf-8" />
 		<link rel="stylesheet" href="libs/css/sdpi.css" />
+		<style>
+			body div.sdpi-wrapper > *:not(.sdpi-heading) {
+				margin-left: 50px;
+			}
+		</style>
 	</head>
-
 	<body>
 		<div class="sdpi-wrapper">
 			<div class="sdpi-heading">MVF1 Global Settings</div>
@@ -55,8 +59,8 @@
 					<div class="sdpi-item-group" id="analytics-group-items">
 						<div type="checkbox" class="sdpi-item">
 							<div class="sdpi-item-label">Allow Analytics</div>
-							<input class="sdpi-item-value" id="analytics" type="checkbox" value="Opt-In" onchange="console.log(this.checked)">
-							<label for="analytics"><span></span>Opt-In</label>
+							<input class="sdpi-item-value" name="allow-analytics" id="allow-analytics" type="checkbox" value="Opt-In" onchange="sendSettings()">
+							<label for="allow-analytics"><span></span>Opt-In</label>
 						</div>
 						<details>
 							<summary>
@@ -74,13 +78,18 @@
 				<div type="group" class="sdpi-item" id="ui-group">
 					<div class="sdpi-item-label">MVF1 UI Configuration</div>
 					<div class="sdpi-item-group" id="ui-group-items">
-						
+
 					</div>
 				</div>
 			</form>
-			<button id="send" type="button" value="Save Settings">
-				Save Settings
+			<div class="sdpi-item">
+				<button class="sdpi-item-value" id="send" type="button" value="Save Settings">
+					Save Settings
+				</button>
+				<button class="sdpi-item-value" id="reset" type="button" value="Reset Settings">
+					Reset To Defaults
 			</button>
+			</div>
 			<details class="message caution hidden" id="message-container">
 				<summary id="error-message"></summary>
 			</details>

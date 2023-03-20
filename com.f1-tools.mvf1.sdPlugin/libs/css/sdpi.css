@@ -97,10 +97,10 @@ button {
     letter-spacing: var(--sdpi-letterspacing);
 }
 
-.sdpi-item-value> :last-of-type,
+/* .sdpi-item-value> :last-of-type,
 .sdpi-item-value:last-child {
     margin-bottom: 4px;
-}
+} */
 
 .win .sdpi-item-value,
 .win option,

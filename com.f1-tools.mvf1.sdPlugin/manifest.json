@@ -1,76 +1,200 @@
 {
-	"SDKVersion": 2,
-	"Author": "F1-Tools",
-	"CodePath": "app.html",
-	"Description": "Streamdeck plugin for controlling Multiviewer for Formula 1",
-	"Name": "MVF1",
-	"Icon": "actions/assets/action",
-	"URL": "https://github.com/f1-tools/MVF1-Streamdeck",
-	"Version": "1.0.0",
-	"Software": {
-		"MinimumVersion": "5.0"
-	},
-	"OS": [
-		{
-			"Platform": "mac",
-			"MinimumVersion": "10.11"
-		},
-		{
-			"Platform": "windows",
-			"MinimumVersion": "10"
-		}
-	],
-	"Category": "MVF1",
-	"CategoryIcon": "actions/assets/mv-rounded",
-	"PropertyInspectorPath": "actions/property-inspector/default.html",
-	"Actions": [
-		{
-			"Icon": "actions/assets/google_icons/sync",
-			"Name": "Sync To Dialogue",
-			"Controllers": ["Keypad"],
-			"States": [
-				{
-					"Image": "actions/assets/google_icons/sync"
-				}
-			],
-			"Tooltip": "Sync all MVF1 feeds to the current dialogue",
-			"UUID": "com.f1-tools.mvf1.sync-to-dialogue"
-		},
-		{
-			"Icon": "actions/assets/google_icons/play_pause",
-			"Name": "Play/Pause All Feeds",
-			"Controllers": ["Keypad"],
-			"States": [
-				{
-					"Image": "actions/assets/google_icons/play_pause"
-				}
-			],
-			"Tooltip": "Toggle Play/Pause of all MVF1 feeds",
-			"UUID": "com.f1-tools.mvf1.play-pause-all"
-		},
-		{
-			"Icon": "actions/assets/google_icons/replay",
-			"Name": "Rewind All Feeds",
-			"Controllers": ["Keypad"],
-			"States": [
-				{
-					"Image": "actions/assets/google_icons/replay"
-				}
-			],
-			"Tooltip": "Rewind all MVF1 feeds by x seconds",
-			"UUID": "com.f1-tools.mvf1.rewind-all"
-		},
-		{
-			"Icon": "actions/assets/google_icons/replay_mirrored",
-			"Name": "Fast Forward All Feeds",
-			"Controllers": ["Keypad"],
-			"States": [
-				{
-					"Image": "actions/assets/google_icons/replay_mirrored"
-				}
-			],
-			"Tooltip": "Fast Forward all MVF1 feeds by x seconds",
-			"UUID": "com.f1-tools.mvf1.fast-forward-all"
-		}
-	]
+    "SDKVersion": 2,
+    "Author": "F1-Tools",
+    "CodePath": "app.html",
+    "Description": "Streamdeck plugin for controlling Multiviewer for Formula 1",
+    "Name": "MVF1",
+    "Icon": "actions/assets/action",
+    "URL": "https://github.com/f1-tools/MVF1-Streamdeck",
+    "Version": "1.0.0",
+    "Software": {
+        "MinimumVersion": "5.0"
+    },
+    "OS": [
+        {
+            "Platform": "mac",
+            "MinimumVersion": "10.11"
+        },
+        {
+            "Platform": "windows",
+            "MinimumVersion": "10"
+        }
+    ],
+    "Category": "MVF1",
+    "CategoryIcon": "actions/assets/mv-rounded",
+    "PropertyInspectorPath": "actions/property-inspector/default.html",
+    "Profiles": [
+        {
+            "Name": "MVF1 Player Picker",
+            "ReadOnly": true,
+            "DeviceType": "0",
+            "DontAutoSwitchWhenInstalled": false
+        },
+        {
+            "Name": "MVF1 Player Picker",
+            "ReadOnly": true,
+            "DeviceType": "3",
+            "DontAutoSwitchWhenInstalled": false
+        }
+    ], 
+    "Actions": [
+        {
+            "Icon": "actions/assets/google_icons/sync",
+            "Name": "Sync To Dialogue",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/google_icons/sync"
+                }
+            ],
+            "Tooltip": "Sync all MVF1 feeds to the current dialogue",
+            "UUID": "com.f1-tools.mvf1.sync-to-dialogue"
+        },
+        {
+            "Icon": "actions/assets/google_icons/play_pause",
+            "Name": "Play/Pause All Feeds",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/google_icons/play_pause"
+                }
+            ],
+            "Tooltip": "Toggle Play/Pause of all MVF1 feeds",
+            "UUID": "com.f1-tools.mvf1.play-pause-all"
+        },
+        {
+            "Icon": "actions/assets/google_icons/replay",
+            "Name": "Rewind All Feeds",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/google_icons/replay"
+                }
+            ],
+            "Tooltip": "Rewind all MVF1 feeds by x seconds",
+            "UUID": "com.f1-tools.mvf1.rewind-all"
+        },
+        {
+            "Icon": "actions/assets/google_icons/replay_mirrored",
+            "Name": "Fast Forward All Feeds",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/google_icons/replay_mirrored"
+                }
+            ],
+            "Tooltip": "Fast Forward all MVF1 feeds by x seconds",
+            "UUID": "com.f1-tools.mvf1.fast-forward-all"
+        },
+        {
+            "Icon": "actions/assets/google_icons/speed",
+            "Name": "Toggle Speedometer Visibility",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/google_icons/speed"
+                }
+            ],
+            "Tooltip": "Toggle All Driver Speedometers",
+            "UUID": "com.f1-tools.mvf1.speedometers-all"
+        },
+        {
+            "Icon": "",
+            "Name": "Player Tile",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": ""
+                }
+            ],
+            "Tooltip": "Empty Tile for Player",
+            "UUID": "com.f1-tools.mvf1.player-tile",
+            "SupportedInMultiActions": false,
+            "VisibleInActionsList": false
+        },
+        {
+            "Icon": "actions/assets/google_icons/fullscreen",
+            "Name": "Toggle Player Fullscreen",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/google_icons/fullscreen"
+                }
+            ],
+            "Tooltip": "Toggle A Player's Fullscreen",
+            "UUID": "com.f1-tools.mvf1.fullscreen"
+        },
+        {
+            "Icon": "actions/assets/google_icons/speed",
+            "Name": "Toggle Driver's Speedometer Visibility",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/google_icons/speed"
+                }
+            ],
+            "Tooltip": "Toggle Individual Driver's Speedometer",
+            "UUID": "com.f1-tools.mvf1.speedometer"
+        },
+        {
+            "Icon": "actions/assets/mv-rounded",
+            "Name": "Cycle Driver Header Mode",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/mv-rounded"
+                }
+            ],
+            "Tooltip": "Cycle Between Driver Header Modes",
+            "UUID": "com.f1-tools.mvf1.driver-header"
+        },
+        {
+            "Icon": "actions/assets/mv-rounded",
+            "Name": "Toggle Stream Mute",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/mv-rounded"
+                }
+            ],
+            "Tooltip": "Toggle a Specific Stream's Mute",
+            "UUID": "com.f1-tools.mvf1.toggle-mute"
+        },
+        {
+            "Icon": "actions/assets/mv-rounded",
+            "Name": "Toggle Stream Always On Top",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/mv-rounded"
+                }
+            ],
+            "Tooltip": "Toggle a Specific Stream's Always On Top",
+            "UUID": "com.f1-tools.mvf1.always-on-top"
+        },
+        {
+            "Icon": "actions/assets/mv-rounded",
+            "Name": "Stream Volume Up",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/mv-rounded"
+                }
+            ],
+            "Tooltip": "Increase a Specific Stream's Volume",
+            "UUID": "com.f1-tools.mvf1.volume-up"
+        },
+        {
+            "Icon": "actions/assets/mv-rounded",
+            "Name": "Stream Volume Down",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/mv-rounded"
+                }
+            ],
+            "Tooltip": "Decrease a Specific Stream's Volume",
+            "UUID": "com.f1-tools.mvf1.volume-down"
+        }
+    ]
 }

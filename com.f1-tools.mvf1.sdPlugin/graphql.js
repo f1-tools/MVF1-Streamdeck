@@ -2,17 +2,36 @@
 /// <reference path="libs/js/stream-deck.js" />
 
 let url = 'http://127.0.0.1:10101/api/graphql';
+let timeout_delay = 300;
 
 $SD.onDidReceiveGlobalSettings(({ payload }) => {
-    url = payload.settings.url;
+    if (payload.settings.url && payload.settings.url !== '') {
+        url = payload.settings.url;
+    }
+    if (payload.settings.timeout_delay && payload.settings.timeout_delay !== '') {
+        timeout_delay = parseInt(payload.settings.timeout_delay) || 300;
+    }
 });
 $SD.getGlobalSettings();
+
+const base64Image = async function (img_url) {
+    const image_promise = fetch(img_url);
+    try {
+        const response = await image_promise;
+        const data = await response.arrayBuffer();
+        return "data:image/png;base64," + btoa(String.fromCharCode(...new Uint8Array(data)));
+    }
+    catch (error) {
+        $SD.logMessage("error: " + error);
+        return error;
+    }
+}
 
 const fetchTimeout = async function (data) {
     const abortController = new AbortController();
     const timeout = setTimeout(() => {
         abortController.abort();
-    }, 300);
+    }, timeout_delay);
     const response_promise = fetch(url, {
         method: 'POST',
         headers: {

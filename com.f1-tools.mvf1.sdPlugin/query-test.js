@@ -76,3 +76,15 @@ const testMVF1Connection = async function () {
 // testMVF1Connection().then((result) => {
 //     console.log("result: " + result);
 // });
+
+
+// fetch(url)
+//     .then((response) => {
+//         if (response.ok) {
+//             return response.arrayBuffer();
+//         }
+//         throw new Error('Network response was not ok.');
+//     })
+//     .then((data) => {
+//         return "data:image/png;base64," + Buffer.from(data).toString('base64');
+//     });

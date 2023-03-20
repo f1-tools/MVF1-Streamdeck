@@ -4,7 +4,7 @@
 let window_data = {
     connected: true,
     message: 'Connected to MVF1',
-    url: '',
+    settings: {},
 }
 
 function showError(payload) {
@@ -66,15 +66,15 @@ $PI.onConnected((jsn) => {
 $PI.onDidReceiveGlobalSettings(({payload}) => {
     if (payload.settings) {
         // $PI.logMessage('onDidReceiveGlobalSettings url: ' + payload.settings.url);
-        window_data.url = payload.settings.url;
+        window_data.settings = payload.settings;
         // re-run connection test
         sendTest();
     }
 })
 
 window.sendToInspector = (data) => {
-    // $PI.logMessage('sendToInspector ' + JSON.stringify(data))
-    $PI.setGlobalSettings({url: data.url});
+    $PI.logMessage('sendToInspector ' + JSON.stringify(data))
+    $PI.setGlobalSettings(data);
     $PI.getGlobalSettings();
 };
 
