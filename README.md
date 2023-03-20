@@ -24,7 +24,6 @@
 ## Todo
 
 - Driver swap for if all streams are already running (change which window is on top)
-- Need icon for blank image
 - Need images in base64 for tile buttons
 - Need to export layouts for other devices sizes
 - Global setting to show/hide titles for drivers on their player cards
