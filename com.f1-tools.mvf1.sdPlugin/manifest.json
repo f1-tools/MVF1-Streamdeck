@@ -87,12 +87,12 @@
             "UUID": "com.f1-tools.mvf1.fast-forward-all"
         },
         {
-            "Icon": "actions/assets/google_icons/speed",
+            "Icon": "actions/assets/google_icons/speed_all",
             "Name": "Toggle Speedometer Visibility",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/google_icons/speed"
+                    "Image": "actions/assets/google_icons/speed_all"
                 }
             ],
             "Tooltip": "Toggle All Driver Speedometers",
@@ -125,84 +125,84 @@
             "UUID": "com.f1-tools.mvf1.fullscreen"
         },
         {
-            "Icon": "actions/assets/google_icons/speed",
+            "Icon": "actions/assets/google_icons/speed_driver",
             "Name": "Toggle Driver's Speedometer Visibility",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/google_icons/speed"
+                    "Image": "actions/assets/google_icons/speed_driver"
                 }
             ],
             "Tooltip": "Toggle Individual Driver's Speedometer",
             "UUID": "com.f1-tools.mvf1.speedometer"
         },
         {
-            "Icon": "actions/assets/mv-rounded",
+            "Icon": "actions/assets/google_icons/repartition",
             "Name": "Cycle Driver Header Mode",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/mv-rounded"
+                    "Image": "actions/assets/google_icons/repartition"
                 }
             ],
             "Tooltip": "Cycle Between Driver Header Modes",
             "UUID": "com.f1-tools.mvf1.driver-header"
         },
         {
-            "Icon": "actions/assets/mv-rounded",
+            "Icon": "actions/assets/google_icons/mic_off",
             "Name": "Toggle Stream Mute",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/mv-rounded"
+                    "Image": "actions/assets/google_icons/mic_off"
                 }
             ],
             "Tooltip": "Toggle a Specific Stream's Mute",
             "UUID": "com.f1-tools.mvf1.toggle-mute"
         },
         {
-            "Icon": "actions/assets/mv-rounded",
+            "Icon": "actions/assets/google_icons/visibility",
             "Name": "Toggle Stream Always On Top",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/mv-rounded"
+                    "Image": "actions/assets/google_icons/visibility"
                 }
             ],
             "Tooltip": "Toggle a Specific Stream's Always On Top",
             "UUID": "com.f1-tools.mvf1.always-on-top"
         },
         {
-            "Icon": "actions/assets/mv-rounded",
+            "Icon": "actions/assets/google_icons/volume_up",
             "Name": "Stream Volume Up",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/mv-rounded"
+                    "Image": "actions/assets/google_icons/volume_up"
                 }
             ],
             "Tooltip": "Increase a Specific Stream's Volume",
             "UUID": "com.f1-tools.mvf1.volume-up"
         },
         {
-            "Icon": "actions/assets/mv-rounded",
+            "Icon": "actions/assets/google_icons/volume_down",
             "Name": "Stream Volume Down",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/mv-rounded"
+                    "Image": "actions/assets/google_icons/volume_down"
                 }
             ],
             "Tooltip": "Decrease a Specific Stream's Volume",
             "UUID": "com.f1-tools.mvf1.volume-down"
         },
         {
-            "Icon": "actions/assets/mv-rounded",
+            "Icon": "actions/assets/google_icons/change_circle",
             "Name": "Swap Feeds",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/mv-rounded"
+                    "Image": "actions/assets/google_icons/change_circle"
                 }
             ],
             "Tooltip": "Swap Player Feeds",
