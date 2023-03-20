@@ -39,12 +39,12 @@
     ], 
     "Actions": [
         {
-            "Icon": "actions/assets/google_icons/sync",
+            "Icon": "actions/assets/google_icons/update",
             "Name": "Sync To Dialogue",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/google_icons/sync"
+                    "Image": "actions/assets/google_icons/update"
                 }
             ],
             "Tooltip": "Sync all MVF1 feeds to the current dialogue",
@@ -99,12 +99,12 @@
             "UUID": "com.f1-tools.mvf1.speedometers-all"
         },
         {
-            "Icon": "",
+            "Icon": "actions/assets/google_icons/blank",
             "Name": "Player Tile",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": ""
+                    "Image": "actions/assets/google_icons/blank"
                 }
             ],
             "Tooltip": "Empty Tile for Player",
@@ -197,16 +197,30 @@
             "UUID": "com.f1-tools.mvf1.volume-down"
         },
         {
-            "Icon": "actions/assets/google_icons/change_circle",
+            "Icon": "actions/assets/google_icons/sports_motorsports",
             "Name": "Swap Feeds",
             "Controllers": ["Keypad"],
             "States": [
                 {
-                    "Image": "actions/assets/google_icons/change_circle"
+                    "Image": "actions/assets/google_icons/sports_motorsports"
                 }
             ],
             "Tooltip": "Swap Player Feeds",
             "UUID": "com.f1-tools.mvf1.swap-feeds"
+        },
+        {
+            "Icon": "actions/assets/google_icons/add_box",
+            "Name": "Open Layout",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/google_icons/add_box"
+                }
+            ],
+            "Tooltip": "Open a saved MVF1 Layout",
+            "UUID": "com.f1-tools.mvf1.open-layout",
+            "SupportedInMultiActions": false,
+            "VisibleInActionsList": false
         }
     ]
 }

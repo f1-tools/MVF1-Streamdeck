@@ -4,6 +4,7 @@
 /// <reference path="graphql.js" />
 
 const ADDITIONAL_LIST = ["INTERNATIONAL", "F1 LIVE", "TRACKER", "DATA"];
+const ICON_LIST = ["actions/assets/google_icons/public", "actions/assets/google_icons/videocam", "actions/assets/google_icons/location_on", "actions/assets/google_icons/query_stats"]
 let devices = {};
 let driver_images = {};
 
