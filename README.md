@@ -4,17 +4,12 @@
 
 - Pause/Play does not pause/play Live Timing Data, but sync can. Issue on MVF1's side.
 - Rewind/fast forward does not work in a live race - MVF1 limitation.
+- When having multiple separate sessions streaming at once, things break...
+- If only 2 streams and swap them, position is lost...
+- Unfullscreening forgets always on top status.
+- Main feed skips when swapping driver cams.
 
 ## Todo
-
-### Stateful Buttons
-
-- Pause button show state
-
-### Single Action Buttons
-
-- Individual stream volume control and mute/unmute
-- Individual stream show speedometer (global setting for it too?)
 
 ### Multi Action Buttons
 

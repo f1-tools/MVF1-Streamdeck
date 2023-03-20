@@ -195,6 +195,18 @@
             ],
             "Tooltip": "Decrease a Specific Stream's Volume",
             "UUID": "com.f1-tools.mvf1.volume-down"
+        },
+        {
+            "Icon": "actions/assets/mv-rounded",
+            "Name": "Swap Feeds",
+            "Controllers": ["Keypad"],
+            "States": [
+                {
+                    "Image": "actions/assets/mv-rounded"
+                }
+            ],
+            "Tooltip": "Swap Player Feeds",
+            "UUID": "com.f1-tools.mvf1.swap-feeds"
         }
     ]
 }

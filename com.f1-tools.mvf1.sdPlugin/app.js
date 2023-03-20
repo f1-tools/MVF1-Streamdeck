@@ -54,9 +54,17 @@ const connectionTester = async function(context, action) {
 	}
 }
 
-const SyncToDialogue = new Action('com.f1-tools.mvf1.sync-to-dialogue');
-SyncToDialogue.onKeyUp(({ action, context, device, event, payload }) => {
-	console.log("Syncing to dialogue");
+function Syncer(playerId) {
+	graphql(`
+		mutation PlayerSync($playerSyncId: ID!) {
+			playerSync(id: $playerSyncId)
+		}
+	`, { playerSyncId: playerId }).then((json) => {
+		$SD.showOk(context);
+	});
+}
+
+function SyncStreams() {
 	graphql(`
 		query Players {
 			players {
@@ -70,17 +78,16 @@ SyncToDialogue.onKeyUp(({ action, context, device, event, payload }) => {
 		const players = json.data.players;
 		const player = players.find((p) => p.streamData.title === "INTERNATIONAL" || p.streamData.title === "F1 LIVE");
 		if (player) {
-			graphql(`
-				mutation PlayerSync($playerSyncId: ID!) {
-					playerSync(id: $playerSyncId)
-				}
-			`, { playerSyncId: player.id }).then((json) => {
-				$SD.showOk(context);
-			});
+			Syncer(player.id);
 		} else {
 			$SD.showAlert(context);
 		}
 	});
+}
+
+const SyncToDialogue = new Action('com.f1-tools.mvf1.sync-to-dialogue');
+SyncToDialogue.onKeyUp(({ action, context, device, event, payload }) => {
+	SyncStreams();
 });
 SyncToDialogue.onSendToPlugin(({ action, context, device, event, payload }) => {
 	connectionTester(context, action);
@@ -240,6 +247,60 @@ function exitTileScreen(device) {
 	// multi_action_device_data[device] = {};
 }
 
+function swapPlayer(oldPlayer, newPlayer, TLA, fn) {
+	if (TLA) {
+		graphql(`
+			mutation PlayerCreate($input: PlayerCreateInput!, $playerDeleteId: ID!) {
+				playerCreate(input: $input)
+				playerDelete(id: $playerDeleteId)
+			}
+		`, { 
+			input: {
+				alwaysOnTop: oldPlayer.alwaysOnTop,
+				bounds: {
+					x: oldPlayer.bounds.x,
+					y: oldPlayer.bounds.y,
+					width: oldPlayer.bounds.width,
+					height: oldPlayer.bounds.height
+				},
+				driverTla: newPlayer,
+				maintainAspectRatio: oldPlayer.maintainAspectRatio,
+				fullscreen: oldPlayer.fullscreen,
+				contentId: oldPlayer.streamData.contentId,
+			}, 
+			playerDeleteId: oldPlayer.id 
+		}).then((json) => {
+			fn();
+		});
+	} else if (!TLA) {
+		graphql(`
+			mutation PlayerCreate($input: PlayerCreateInput!, $playerDeleteId: ID!) {
+				playerCreate(input: $input)
+				playerDelete(id: $playerDeleteId)
+			}
+		`, { 
+			input: {
+				alwaysOnTop: oldPlayer.alwaysOnTop,
+				bounds: {
+					x: oldPlayer.bounds.x,
+					y: oldPlayer.bounds.y,
+					width: oldPlayer.bounds.width,
+					height: oldPlayer.bounds.height
+				},
+				streamTitle: newPlayer,
+				maintainAspectRatio: oldPlayer.maintainAspectRatio,
+				fullscreen: oldPlayer.fullscreen,
+				contentId: oldPlayer.streamData.contentId,
+			}, 
+			playerDeleteId: oldPlayer.id 
+		}).then((json) => {
+			fn();
+		});
+	} else {
+		$SD.logMessage("No new player TLA or title provided");
+	}
+}
+
 function doTileAction(device, driver) {
 	if (multi_action_device_data[device].tile_caller === "") {
 		exitTileScreen(device);
@@ -247,6 +308,7 @@ function doTileAction(device, driver) {
 	}
 
 	let defined_id = !(driver.id === "");
+	let exit_func = true;
 
 	if (defined_id && multi_action_device_data[device].tile_caller === "com.f1-tools.mvf1.fullscreen") {
 		graphql(`
@@ -330,9 +392,86 @@ function doTileAction(device, driver) {
 				}
 			`, { playerSetVolumeId: driver.id, volume: volume });
 		});
+	} else if (multi_action_device_data[device].tile_caller === "com.f1-tools.mvf1.swap-feeds") {
+		exit_func = false;
+		if (multi_action_device_data[device].tile_caller_payload.settings !== undefined && multi_action_device_data[device].tile_caller_payload.settings.feed1 !== undefined) {
+			exit_func = true;
+			let player1 = multi_action_device_data[device].tile_caller_payload.settings.feed1;
+			let player2 = driver;
+
+			// determine which player is currently playing
+			graphql(`
+				query Players {
+					players {
+						bounds {
+							x
+							y
+							width
+							height
+						}
+						id
+						fullscreen
+						alwaysOnTop
+						maintainAspectRatio
+						state {
+							volume
+						}
+						streamData {
+							title
+							contentId
+						}
+					}
+				}
+			`).then((json) => {
+				let player1_playing = false;
+				let player2_playing = false;
+				for (let i = 0; i < json.data.players.length; i++) {
+					if (json.data.players[i].id === player1.id) {
+						player1_playing = true;
+						player1 = json.data.players[i];
+					} else if (json.data.players[i].id === player2.id) {
+						player2_playing = true;
+						player2 = json.data.players[i];
+					}
+				}
+
+				let oldest_id = null;
+				for (let i = 0; i < json.data.players.length; i++) {
+					if (json.data.players[i].id !== player1.id && json.data.players[i].id !== player2.id) {
+						if (oldest_id === null || json.data.players[i].id < oldest_id) {
+							oldest_id = json.data.players[i].id;
+						}
+					}
+				}
+
+				if (!player1_playing && !player2_playing) {
+					exitTileScreen(device);
+				} else if (player1_playing && !player2_playing) {
+					// player 1 is playing, player 2 is not
+					let is_tla = player2.type === "OBC";
+					swapPlayer(player1, player2.tla, is_tla, Syncer(oldest_id));
+				} else if (!player1_playing && player2_playing) {
+					// player 2 is playing, player 1 is not
+					let is_tla = player1.type === "OBC";
+					swapPlayer(player2, player1.tla, is_tla, Syncer(oldest_id));
+				} else {
+					// both players are playing
+					swapPlayer(player1, player2.streamData.title, false, Syncer(oldest_id));
+					swapPlayer(player2, player1.streamData.title, false, Syncer(oldest_id));
+				}
+			});
+		} else {
+			multi_action_device_data[device].tile_caller_payload = {
+				settings: {
+					feed1: driver,
+				}
+			};
+		}
 	}
 	
-	exitTileScreen(device);
+	if (exit_func) {
+		exitTileScreen(device);
+	}
 }
 
 const showPlayerTiles = function(device, caller_uuid, payload) {
@@ -635,5 +774,13 @@ VolumeDown.onKeyUp(({ action, context, device, event, payload }) => {
 	showPlayerTiles(device, action, payload);
 });
 VolumeDown.onSendToPlugin(({ action, context, device, event, payload }) => {
+	connectionTester(context, action);
+});
+
+const SwapFeeds = new Action('com.f1-tools.mvf1.swap-feeds');
+SwapFeeds.onKeyUp(({ action, context, device, event, payload }) => {
+	showPlayerTiles(device, action, payload);
+});
+SwapFeeds.onSendToPlugin(({ action, context, device, event, payload }) => {
 	connectionTester(context, action);
 });
