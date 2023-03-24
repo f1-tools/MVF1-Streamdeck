@@ -110,7 +110,7 @@
             "Tooltip": "Empty Tile for Player",
             "UUID": "com.f1-tools.mvf1.player-tile",
             "SupportedInMultiActions": false,
-            "VisibleInActionsList": false
+            "VisibleInActionsList": true
         },
         {
             "Icon": "actions/assets/google_icons/fullscreen",
