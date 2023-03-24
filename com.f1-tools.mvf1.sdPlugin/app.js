@@ -880,8 +880,13 @@ function updateProfileIcons(device, target_page) {
             };
         }
 
-        $SD.setTitle(new_driver.context, new_driver.tla);
-        $SD.setImage(new_driver.context, new_driver.headshot);
+        console.log('new_driver: ' + JSON.stringify(new_driver));
+        if (new_driver.context !== undefined && new_driver.context !== '' && new_driver.context !== null) {
+            $SD.setTitle(new_driver.context, new_driver.tla);
+            $SD.setImage(new_driver.context, new_driver.headshot);
+        } else {
+            console.log('Error setting title or image for tile due to no context. TLA: ' + new_driver.tla);
+        }
     }
 }
 
@@ -894,6 +899,8 @@ PlayerTile.onWillAppear(({ action, context, device, event, payload }) => {
         multi_action_device_data[device].tiles.pages[page_num][coord_string];
 
     // set the tile's context to the driver's id
+
+    console.log('setting context for ' + driver.tla + ' to ' + driver.id);
     multi_action_device_data[device].tiles.pages[page_num][
         coord_string
     ].context = context;

@@ -23,6 +23,7 @@
 
 ## Todo
 
+- Error handling in API promises if stream deck launched before MVF1
 - Driver swap for if all streams are already running (change which window is on top)
 - Need images in base64 for tile buttons
 - Need to export layouts for other devices sizes
