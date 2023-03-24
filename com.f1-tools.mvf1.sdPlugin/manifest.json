@@ -36,7 +36,7 @@
             "DeviceType": "3",
             "DontAutoSwitchWhenInstalled": false
         }
-    ], 
+    ],
     "Actions": [
         {
             "Icon": "actions/assets/google_icons/update",
