@@ -1,0 +1,13 @@
+name: Auto-Build
+on: push
+
+jobs:
+  build:
+    runs-on: windows-latest 
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: StreamDeck Plugin Distribution
+      uses: AdamCarballo/streamdeck-distribution-tool@v1.0.1
+      with:
+        input: com.f1-tools.mvf1.sdPlugin
