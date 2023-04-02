@@ -2,9 +2,9 @@
     "SDKVersion": 2,
     "Author": "F1-Tools",
     "CodePath": "app.html",
-    "Description": "Streamdeck plugin for controlling Multiviewer for Formula 1",
+    "Description": "Stream Deck plugin for controlling MultiViewer for Formula 1",
     "Name": "MVF1",
-    "Icon": "actions/assets/action",
+    "Icon": "actions/assets/mv-rounded",
     "URL": "https://github.com/f1-tools/MVF1-Streamdeck",
     "Version": "1.0.0",
     "Software": {
@@ -34,6 +34,12 @@
             "Name": "MVF1 Player Picker",
             "ReadOnly": true,
             "DeviceType": "3",
+            "DontAutoSwitchWhenInstalled": false
+        },
+        {
+            "Name": "MVF1 Player Picker - XL",
+            "ReadOnly": true,
+            "DeviceType": "2",
             "DontAutoSwitchWhenInstalled": false
         }
     ],
@@ -110,7 +116,7 @@
             "Tooltip": "Empty Tile for Player",
             "UUID": "com.f1-tools.mvf1.player-tile",
             "SupportedInMultiActions": false,
-            "VisibleInActionsList": true
+            "VisibleInActionsList": false
         },
         {
             "Icon": "actions/assets/google_icons/fullscreen",

@@ -309,7 +309,9 @@ function waitToSync(id, oldPlayer, oldest_id) {
         let ct = null;
         try {
             ct = json.data.player.state.currentTime || null;
-        } catch (e) {}
+        } catch (e) {
+            $SD.logMessage(e);
+        }
         $SD.logMessage('CT: ' + ct);
         if (ct == null || ct == 0 || ct == undefined) {
             setTimeout(() => {
@@ -832,7 +834,13 @@ const showPlayerTiles = function (device, caller_uuid, payload) {
         // save the data for the multi action
         multi_action_device_data[device] = new_data;
 
-        $SD.switchToProfile(device, 'MVF1 Player Picker');
+        if (devices[device].size.type == 1) {
+            $SD.switchToProfile(device, 'MVF1 Player Picker - Mini');
+        } else if (devices[device].size.type == 2) {
+            $SD.switchToProfile(device, 'MVF1 Player Picker - XL');
+        } else {
+            $SD.switchToProfile(device, 'MVF1 Player Picker');
+        }
         updateProfileIcons(device, 0);
     });
 };
