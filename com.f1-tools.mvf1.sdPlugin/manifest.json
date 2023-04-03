@@ -21,7 +21,7 @@
         }
     ],
     "Category": "MVF1",
-    "CategoryIcon": "actions/assets/mv-rounded",
+    "CategoryIcon": "actions/assets/mv-rounded-cat",
     "PropertyInspectorPath": "actions/property-inspector/default.html",
     "Profiles": [
         {
