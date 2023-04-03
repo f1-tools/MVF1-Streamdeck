@@ -41,6 +41,12 @@
             "ReadOnly": true,
             "DeviceType": "2",
             "DontAutoSwitchWhenInstalled": false
+        },
+        {
+            "Name": "MVF1 Player Picker - Mini",
+            "ReadOnly": true,
+            "DeviceType": "1",
+            "DontAutoSwitchWhenInstalled": false
         }
     ],
     "Actions": [
