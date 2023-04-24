@@ -39,6 +39,7 @@ If you have any other issues you run into, please open an issue!
 - Profile installation issues and switching on initial install #1
 - If only 2 streams and swap them, position is lost... #7
 - Unfullscreening forgets always on top status. #8
+- Cycle Driver header mode can remove driver header but breaks things after that #12 (temp: to fix swap driver stream with same stream)
 
 ### In Progress
 
