@@ -292,13 +292,23 @@ function exitTileScreen(device) {
     $SD.switchToProfile(device);
 }
 
-function waitToSync(id, oldPlayer, oldest_id) {
+// iter: number of times we have waited for the player to sync
+// id: id of the new player we want to wait for to sync
+// oldPlayer: the player we have replaced
+// oldest_id: the id of the oldest player
+function waitToSync(iter, id, oldPlayer, oldest_id) {
+    if (iter > 100) { // 10 seconds
+        console.log('waitToSync timed out - MV issue');
+        $SD.logMessage('waitToSync timed out - MV issue');
+        return;
+    }
     graphql(
         `
             query Player($playerId: ID!) {
                 player(id: $playerId) {
                     state {
                         currentTime
+                        interpolatedCurrentTime
                     }
                 }
             }
@@ -306,15 +316,20 @@ function waitToSync(id, oldPlayer, oldest_id) {
         { playerId: id }
     ).then((json) => {
         let ct = null;
+        let interpolatedCurrentTime = null;
         try {
             ct = json.data.player.state.currentTime || null;
+            interpolatedCurrentTime = json.data.player.state.interpolatedCurrentTime || null; 
         } catch (e) {
-            $SD.logMessage(e);
+            $SD.logMessage("not a bug, a timing \"feature\": ", e);
         }
         $SD.logMessage('CT: ' + ct);
-        if (ct == null || ct == 0 || ct == undefined) {
+
+        // if the player is not ready, wait and try again
+        if ((ct == null || ct == 0 || ct == undefined) &&
+            (interpolatedCurrentTime == null || interpolatedCurrentTime == 0 || interpolatedCurrentTime == undefined)) {
             setTimeout(() => {
-                waitToSync(id, oldPlayer, oldest_id);
+                waitToSync(iter + 1, id, oldPlayer, oldest_id);
             }, 100);
         } else {
             // set volume and mute to match old player
@@ -336,15 +351,20 @@ function waitToSync(id, oldPlayer, oldest_id) {
                     playerSetVolumeId: id,
                     volume: oldPlayer.state.volume,
                 }
-            ).then((json) => {});
-            Syncer(oldest_id);
+            ).then((json) => {
+                Syncer(oldest_id);
+            })
+            .catch((error) => {
+                console.log('Error with setting mute or volume', error)
+            });
         }
     });
 }
 
+// TLA: boolean true if onboard cam, false if map, data, etc
 function swapPlayer(oldPlayer, newPlayer, TLA, oldest_id) {
     if (TLA) {
-        graphql_slow(
+        graphql_slow( // TODO: this sucks and should be fixed
             `
 			mutation PlayerCreate($input: PlayerCreateInput!, $playerDeleteId: ID!) {
 				playerCreate(input: $input)
@@ -368,10 +388,10 @@ function swapPlayer(oldPlayer, newPlayer, TLA, oldest_id) {
                 playerDeleteId: oldPlayer.id,
             }
         ).then((json) => {
-            waitToSync(json.data.playerCreate, oldPlayer, oldest_id);
+            waitToSync(0, json.data.playerCreate, oldPlayer, oldest_id);
         });
     } else if (!TLA) {
-        graphql_slow(
+        graphql_slow( //TODO: This is a bad code, we should not use slow here
             `
 			mutation PlayerCreate($input: PlayerCreateInput!, $playerDeleteId: ID!) {
 				playerCreate(input: $input)
@@ -395,7 +415,7 @@ function swapPlayer(oldPlayer, newPlayer, TLA, oldest_id) {
                 playerDeleteId: oldPlayer.id,
             }
         ).then((json) => {
-            waitToSync(json.data.playerCreate, oldPlayer, oldest_id);
+            waitToSync(0, json.data.playerCreate, oldPlayer, oldest_id);
         });
     } else {
         $SD.logMessage('No new player TLA or title provided');
@@ -465,6 +485,8 @@ function doTileAction(device, driver) {
         multi_action_device_data[device].tile_caller ===
             'com.f1-tools.mvf1.driver-header'
     ) {
+        let options = ['NONE', 'OBC_LIVE_TIMING', 'DRIVER_HEADER'];
+        let mode = Math.floor(Math.random() * 3); // don't come at me with this trust me its the easiest way, not the best, but easiest way
         graphql(
             `
                 mutation PlayerSetDriverHeaderMode(
@@ -477,7 +499,7 @@ function doTileAction(device, driver) {
                     )
                 }
             `,
-            { playerSetDriverHeaderModeId: driver.id, mode: 'NONE' }
+            { playerSetDriverHeaderModeId: driver.id, mode: options[mode] }
         );
     } else if (
         defined_id &&
@@ -604,6 +626,7 @@ function doTileAction(device, driver) {
                         alwaysOnTop
                         maintainAspectRatio
                         state {
+                            muted
                             volume
                         }
                         streamData {
@@ -633,9 +656,9 @@ function doTileAction(device, driver) {
                     ) {
                         if (
                             oldest_id === null ||
-                            json.data.players[i].id < oldest_id
+                            parseInt(json.data.players[i].id) < oldest_id
                         ) {
-                            oldest_id = json.data.players[i].id;
+                            oldest_id = parseInt(json.data.players[i].id);
                         }
                     }
                 }
@@ -652,6 +675,8 @@ function doTileAction(device, driver) {
                     swapPlayer(player2, player1.tla, is_tla, oldest_id);
                 } else {
                     // both players are playing
+                    // TODO: should we not run a swap if the two players are the same?
+                    // for now, no until #12 is fixed on MV side
                     swapPlayer(
                         player1,
                         player2.streamData.title,
