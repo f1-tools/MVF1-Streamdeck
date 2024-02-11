@@ -802,7 +802,7 @@ const showPlayerTiles = function (device, caller_uuid, payload) {
             for (let i = 0; i < num_tiles; i++) {
                 let driver = sorted_drivers[i + j * num_tiles];
                 if (driver === undefined) {
-                    if (j = 0) {
+                    if (j === 0) {
 			// On the first page add empty tiles to prevent issues on the Stream Deck XL (#16: 'MultiAction[device].tiles.pages[j0][`${row}:${col}`].context: undefined')
 			driver = {
 				tla: '',
