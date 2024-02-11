@@ -290,7 +290,6 @@ const multi_action_data = {
 
 function exitTileScreen(device) {
     $SD.switchToProfile(device);
-    // multi_action_device_data[device] = {};
 }
 
 function waitToSync(id, oldPlayer, oldest_id) {
@@ -887,9 +886,9 @@ function updateProfileIcons(device, target_page) {
         if (
             new_driver === undefined ||
             new_driver === null ||
-            new_driver === '' ||
-            new_driver === {} ||
-            new_driver === []
+            new_driver === '' // ||
+            // new_driver === {} ||
+            // new_driver === []
         ) {
             new_driver = {
                 tla: '',
@@ -965,9 +964,9 @@ PlayerTile.onKeyDown(({ action, context, device, event, payload }) => {
     if (
         driver === undefined ||
         driver === null ||
-        driver === '' ||
-        driver === {} ||
-        driver === []
+        driver === '' // ||
+        // driver === {} ||
+        // driver === []
     ) {
         // if the tile is empty, go back to the profile
         updateProfileIcons(device, 0);
