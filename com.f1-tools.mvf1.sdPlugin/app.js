@@ -802,19 +802,19 @@ const showPlayerTiles = function (device, caller_uuid, payload) {
             for (let i = 0; i < num_tiles; i++) {
                 let driver = sorted_drivers[i + j * num_tiles];
                 if (driver === undefined) {
-                    if (j === 0) {
-			// On the first page add empty tiles to prevent issues on the Stream Deck XL (#16: 'MultiAction[device].tiles.pages[j0][`${row}:${col}`].context: undefined')
-			driver = {
-				tla: '',
-				headshot: '',
-				context: '',
-				type: 'EMPTY',
-				id: '',
-			};
-		    } else {
-			break;
-		    }
-		}
+                    // On the first page add empty tiles to prevent undefined tiles from causing problems(#16) 
+                    // when the number of drivers is fewer than the number on the first page. 
+                    if (j > 0) {
+                        break;
+                    }
+                    driver = {
+                        tla: '',
+                        headshot: '',
+                        context: '',
+                        type: 'EMPTY',
+                        id: '',
+                    };
+	            }
                 let row = Math.floor(i / aval_cols) % aval_rows;
                 let col = i % aval_cols;
 
