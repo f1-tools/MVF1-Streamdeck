@@ -834,12 +834,25 @@ const showPlayerTiles = function (device, caller_uuid, payload) {
         // save the data for the multi action
         multi_action_device_data[device] = new_data;
 
-        if (devices[device].size.type == 1) {
-            $SD.switchToProfile(device, 'MVF1 Player Picker - Mini');
-        } else if (devices[device].size.type == 2) {
-            $SD.switchToProfile(device, 'MVF1 Player Picker - XL');
-        } else {
+        // Switch to profile or say that the device type is not supported 
+        if (devices[device].type == 0) {
             $SD.switchToProfile(device, 'MVF1 Player Picker');
+        } else if (devices[device].type == 1) {
+            $SD.switchToProfile(device, 'MVF1 Player Picker - Mini');
+        } else if (devices[device].type == 2) {
+            $SD.switchToProfile(device, 'MVF1 Player Picker - XL');
+        } else if (devices[device].type == 3) {
+            $SD.logMessage("Device type not supported: Mobile/" + devices[device].type);
+        } else if (devices[device].type == 4) {
+            $SD.logMessage("Device type not supported: Gkeys/" + devices[device].type);
+        } else if (devices[device].type == 5) {
+            $SD.logMessage("Device type not supported: Stream Deck Pedals/" + devices[device].type);
+        } else if (devices[device].type == 6) {
+            $SD.logMessage("Device type not supported: Voyager/" + devices[device].type);
+        } else if (devices[device].type == 7) {
+            $SD.switchToProfile(device, 'MVF1 Player Picker - Plus');
+        } else {
+            $SD.logMessage("Device type not supported: " + devices[device].type);
         }
         updateProfileIcons(device, 0);
     });
@@ -888,12 +901,11 @@ function updateProfileIcons(device, target_page) {
             };
         }
 
-        console.log('new_driver: ' + JSON.stringify(new_driver));
         if (new_driver.context !== undefined && new_driver.context !== '' && new_driver.context !== null) {
             $SD.setTitle(new_driver.context, new_driver.tla);
             $SD.setImage(new_driver.context, new_driver.headshot);
         } else {
-            console.log('Error setting title or image for tile due to no context. TLA: ' + new_driver.tla);
+            $SD.logMessage('Error setting title or image for tile due to no context. TLA: ' + new_driver.tla);
         }
     }
 }
@@ -907,8 +919,6 @@ PlayerTile.onWillAppear(({ action, context, device, event, payload }) => {
         multi_action_device_data[device].tiles.pages[page_num][coord_string];
 
     // set the tile's context to the driver's id
-
-    console.log('setting context for ' + driver.tla + ' to ' + driver.id);
     multi_action_device_data[device].tiles.pages[page_num][
         coord_string
     ].context = context;

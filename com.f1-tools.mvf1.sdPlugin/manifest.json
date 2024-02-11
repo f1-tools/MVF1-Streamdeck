@@ -31,12 +31,6 @@
             "DontAutoSwitchWhenInstalled": false
         },
         {
-            "Name": "MVF1 Player Picker",
-            "ReadOnly": true,
-            "DeviceType": 3,
-            "DontAutoSwitchWhenInstalled": false
-        },
-        {
             "Name": "MVF1 Player Picker - XL",
             "ReadOnly": true,
             "DeviceType": 2,
@@ -46,6 +40,12 @@
             "Name": "MVF1 Player Picker - Mini",
             "ReadOnly": true,
             "DeviceType": 1,
+            "DontAutoSwitchWhenInstalled": false
+        },
+        {
+            "Name": "MVF1 Player Picker - Plus",
+            "ReadOnly": true,
+            "DeviceType": 7,
             "DontAutoSwitchWhenInstalled": false
         }
     ],
