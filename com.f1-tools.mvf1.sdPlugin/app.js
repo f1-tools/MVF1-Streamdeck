@@ -19,6 +19,8 @@ let driver_images = {
 	'DATA': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAMxSURBVGhD7VqBjeIwEMx9BZRAB1ACJVACJUAFlAAdUAJ0AB1AB9ABdJDPBDtMNuPEfHLCSD/SiGTjOLvr8a51up8sy/KCX4s/7vdr8T+AT+OrAhiPx9loNHJ3L2ATJ8/FYpHf7/ccmE6n/Kw+MEUWWa+cBxAMPa8PTpGbzca5nufX67UMiJ7XB6fG+XzuXH/CZB+s3SRFZPp8PjvX83y/36txDUMyXK/XzvW83ANm83o2DEkQzvLGXS6XclxBafwoIZ3j8ehcz8trs3GZ0vhRItseWIXZbCbHOUrjYMTHsflQTdRzy6Lb1qSDfaDGEaVxEMJ5RmAT1ohgPUTNV5TG3rQ6BuCQGuuJGs/okI6nNPYm65gRqiYImKWD7qvGCUpjL1od25VQUuo4LrRRGiVjJ2Udo5NaOVkpRRwX2iiNDaIaIKsdNbnhjNcx3mGwlCKOC22UxhqtUwhCjYOT7IzVMTILG4JSScB3ID9r76A0VrROeahM2bNL20oNSGmsaJ1isFbfOLtURIADBCmNJZVTu93O3T3hOyxv0pDEQMyJpGBV/dz4xYpGdF1FaSzJTrFk2A5wCYQzoQaEBHBCFNreD1Aay495YFKu3aF9AYQaEJdWD8wbCuiNUto0xhyoEATqOSPUgDgZAFYQCfFj8Qsp2vk4aS1sGlnnbV0RH2CorNlkYIVC84EsT9vwAqwbQo0oRASBgENVh5MB59qcB/GcA46Q0usGL7c1on8ha99XrC5y6Y6oTK8bfhFZ6MpWDFnXsV2WVaAapuHzAlLgpQtJ4h0iAR6YW41R5L0FRagxntUfd4vsVH84PRwO2Xa7La/74PF4lAQwt5+/C/DF43a7uSuNKoDT6VQ6jt/VauWs/XG5XNxVlhXScFftmEwm7qo7AEAuzVC0XVqNYaLqsZQjeoE0DkbsA97IbaUUzvPYiA0MSuOghGMMZBgVD3ZkGFUHK8WZB9BD1HyG0jg47XEiFhG9SBp/hcg2S0QBErNH9o4gpPFXCclAQnAWdR5ah5O8Yd8IQhqTYGQQDUNSjAiidpMkbRDmTFUfnCo5CNPc6gNTpu8bbPtxF1+LL/9fiSz7C7owQY6CE5eAAAAAAElFTkSuQmCC',
 	'Next Page': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAHdSURBVGhD7ZmBbcIwEEXTTsAIjMAIjMAIjMAGjMAIjMAIjMAIjAAbpHyI1V/rcUmIqFvJT3qKcj+oOccxRv1omqa9+W/57I7/ltpAaWoDpakNlKY2UJraQGn+TAObzaa5XC7341i0mRvkYrFod7tdO5/PMZ/i7eZboSPlgVhEz+fz/Y8INULXvKpDeSAW0ZzT6XR/KnTtWB3KA7GIPuM2b/H6MTqUB2IRjdDTmPJuOJQHYhF1NHV00znr9Ro/26dDeSAWUSfVttttV/nmeDy2s9nsx2f7dCgPxCLqeF1Pw1cooeVwzNNwKA/EIupQrqU1Z+hy61AeiEXUoVzS09D5crnE65MO5YFYRB3K3f1+3135oO8b1qH8mW/ZC91e4OZ6vXZnD3Su+jvAzkiHcqmpki+vGv3VaoXXJx3KA7GIOnmmZVMvbNqUJYYuqQ7lgVhEHa/Tl5oaGbPFcCgPxCLqpJpukkZ97LbCoTwQi6ijaXE4HLqzB2nUh0yZXIfyQCyiDo36lK21Q3kgFlFiyqi7DuWBWERz9OL2LY9DdSgPxCKa/6ScOuquQ3kgFlHNcW0R+vY1r5jQlKQ8EIu/rn5X6OY1QJQ/s/6PrDS1gdLUBkpTGyhNbaA0tYGyNM0XqX6IceQhwJ0AAAAASUVORK5CYII='
 };
+const driver_header_options = ['NONE', 'OBC_LIVE_TIMING', 'DRIVER_HEADER'];
+let driver_header_mode = 0;
 
 /**
  * The first event fired when Stream Deck starts
@@ -485,8 +487,13 @@ function doTileAction(device, driver) {
         multi_action_device_data[device].tile_caller ===
             'com.f1-tools.mvf1.driver-header'
     ) {
-        let options = ['NONE', 'OBC_LIVE_TIMING', 'DRIVER_HEADER'];
-        let mode = Math.floor(Math.random() * 3); // don't come at me with this trust me its the easiest way, not the best, but easiest way
+        // there's no way to know the current driver header mode for the current player,
+        // so let's just loop through the available options,
+        // starting where we left off last time we used this (for any player) or at 0.
+        driver_header_mode++;
+	if (driver_header_mode >= driver_header_options.length){
+	    driver_header_mode = 0;
+	}
         graphql(
             `
                 mutation PlayerSetDriverHeaderMode(
@@ -499,7 +506,7 @@ function doTileAction(device, driver) {
                     )
                 }
             `,
-            { playerSetDriverHeaderModeId: driver.id, mode: options[mode] }
+            { playerSetDriverHeaderModeId: driver.id, mode: driver_header_options[driver_header_mode] }
         );
     } else if (
         defined_id &&
