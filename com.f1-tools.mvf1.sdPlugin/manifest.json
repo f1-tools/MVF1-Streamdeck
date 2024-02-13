@@ -6,7 +6,7 @@
     "Name": "MVF1",
     "Icon": "actions/assets/mv-rounded",
     "URL": "https://github.com/f1-tools/MVF1-Streamdeck",
-    "Version": "1.0.0",
+    "Version": "1.0.3",
     "Software": {
         "MinimumVersion": "5.0"
     },
