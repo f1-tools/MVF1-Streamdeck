@@ -487,7 +487,7 @@ function doTileAction(device, driver) {
         multi_action_device_data[device].tile_caller ===
             'com.f1-tools.mvf1.driver-header'
     ) {
-        // there's no way to know the current driver header mode for thew current player, so let's just loop through the available options, starting where we left off last time we used this (for any player) or at 0.
+        // there's no way to know the current driver header mode for the current player, so let's just loop through the available options, starting where we left off last time we used this (for any player) or at 0.
         driverheadermode++;
 	if (driverheadermode >= driverheaderoptions.length){
 	    driverheadermode = 0;
