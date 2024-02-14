@@ -20,7 +20,7 @@ let driver_images = {
 	'Next Page': 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM/rhtAAAACXBIWXMAAABxAAAAcQEcP4B3AAAAd0lEQVRYhe3YsQ2AMAxEUYtJGIVRMgqbMGJG+JQRhAZjlFi611v6krszE2mAFdiBbXTLI6DSlNE9HXpldNMFUBQZQZFRFBlFkVEUGUWRUbJEHrfA+uZ++SsshalfrDgvxXkpzktxXorzUtwXU8eZ5Zjf5h4wJaMT77i5qyCzaMMAAAAASUVORK5CYII='
 };
 const driver_header_options = ['NONE', 'OBC_LIVE_TIMING', 'DRIVER_HEADER'];
-let driver_header_mode = 0;
+let driver_header_mode = {};
 
 /**
  * The first event fired when Stream Deck starts
@@ -487,13 +487,15 @@ function doTileAction(device, driver) {
         multi_action_device_data[device].tile_caller ===
             'com.f1-tools.mvf1.driver-header'
     ) {
-        // there's no way to know the current driver header mode for the current player,
-        // so let's just loop through the available options,
-        // starting where we left off last time we used this (for any player) or at 0.
-        driver_header_mode++;
-	if (driver_header_mode >= driver_header_options.length){
-	    driver_header_mode = 0;
-	}
+        // there's no way to know the current driver header mode for the given player,
+        // so let's loop through the available options, starting at the second option.
+        if (driver_header_mode[driver.id] === undefined){
+            driver_header_mode[driver.id]=1;
+        } else if (driver_header_mode[driver.id] + 1 >= driver_header_options.length){
+            driver_header_mode[driver.id]=0;
+        } else {
+            driver_header_mode[driver.id]++;
+        }
         graphql(
             `
                 mutation PlayerSetDriverHeaderMode(
@@ -506,7 +508,7 @@ function doTileAction(device, driver) {
                     )
                 }
             `,
-            { playerSetDriverHeaderModeId: driver.id, mode: driver_header_options[driver_header_mode] }
+            { playerSetDriverHeaderModeId: driver.id, mode: driver_header_options[driver_header_mode[driver.id]] }
         );
     } else if (
         defined_id &&
