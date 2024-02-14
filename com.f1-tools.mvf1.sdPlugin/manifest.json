@@ -6,7 +6,7 @@
     "Name": "MVF1",
     "Icon": "actions/assets/PNG/mv_logo",
     "URL": "https://github.com/f1-tools/MVF1-Streamdeck",
-    "Version": "1.0.3",
+    "Version": "1.1.1",
     "Software": {
         "MinimumVersion": "5.0"
     },
