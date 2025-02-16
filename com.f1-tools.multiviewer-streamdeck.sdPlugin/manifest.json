@@ -1,0 +1,49 @@
+{
+	"Name": "MultiViewer StreamDeck",
+	"Version": "0.1.0.0",
+	"Author": "F1-Tools",
+	"Actions": [
+		{
+			"Name": "PausePlay",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.pause-play",
+			"Icon": "imgs/actions/PNG/pause",
+			"Tooltip": "Pauses or plays all windows",
+			"PropertyInspectorPath": "ui/pause-play.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/pause"
+				},
+				{
+					"Image": "imgs/actions/PNG/play"
+				}
+			]
+		}
+	],
+	"Category": "MultiViewer StreamDeck",
+	"CategoryIcon": "imgs/plugin/mv_logo",
+	"CodePath": "bin/plugin.js",
+	"Description": "A Stream Deck Plugin used for controlling the MutliViewer application and its many windows. ",
+	"Icon": "imgs/plugin/marketplace",
+	"SDKVersion": 2,
+	"Software": {
+		"MinimumVersion": "6.4"
+	},
+	"OS": [
+		{
+			"Platform": "mac",
+			"MinimumVersion": "12"
+		},
+		{
+			"Platform": "windows",
+			"MinimumVersion": "10"
+		}
+	],
+	"Nodejs": {
+		"Version": "20",
+		"Debug": "enabled"
+	},
+	"UUID": "com.f1-tools.multiviewer-streamdeck"
+}
