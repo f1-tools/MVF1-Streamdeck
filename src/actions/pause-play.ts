@@ -5,9 +5,10 @@ import { Player } from "../mv-types";
 import { getPlayerWithPriority, syncPlayersToPlayer } from "../helpers";
 
 @action({ UUID: "com.f1-tools.multiviewer-streamdeck.pause-play" })
-export class PausePlay extends SingletonAction {
+export class PausePlay extends SingletonAction<Settings> {
 
-	override async onKeyDown(ev: KeyDownEvent): Promise<void> {
+	override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
+		const settings = await ev.action.getSettings();
 		let playerWithPriority: Player;
 		// get the current state of the commentary player or oldest player 
 		gql_client
@@ -61,7 +62,9 @@ export class PausePlay extends SingletonAction {
 						});
 				});
 				
-				syncPlayersToPlayer(playerWithPriority);
+				if (settings.sync) {
+					syncPlayersToPlayer(playerWithPriority);
+				}
 
 				// update the icon
 				if (desiredPausedState) {
@@ -75,3 +78,7 @@ export class PausePlay extends SingletonAction {
 		});
 	}
 }
+
+type Settings = {
+	sync: boolean; // whether to sync players after the play/pause action
+};

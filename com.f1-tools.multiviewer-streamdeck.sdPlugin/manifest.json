@@ -4,10 +4,10 @@
 	"Author": "F1-Tools",
 	"Actions": [
 		{
-			"Name": "Sync All Players",
+			"Name": "Sync All Players and Data Stream",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.sync",
 			"Icon": "imgs/actions/PNG/sync",
-			"Tooltip": "Syncs all players to commentary or the oldest player",
+			"Tooltip": "Syncs all players and the data stream to commentary or the oldest player",
 			"PropertyInspectorPath": "ui/sync.html",
 			"Controllers": [
 				"Keypad"
@@ -19,10 +19,10 @@
 			]
 		},
 		{
-			"Name": "Pause/Play All Feeds",
+			"Name": "Play/Pause All Players",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.pause-play",
 			"Icon": "imgs/actions/PNG/pause",
-			"Tooltip": "Pauses or plays all windows, followed by an automatic sync",
+			"Tooltip": "Pauses or plays all players, followed by an automatic sync",
 			"PropertyInspectorPath": "ui/pause-play.html",
 			"Controllers": [
 				"Keypad"
@@ -33,6 +33,36 @@
 				},
 				{
 					"Image": "imgs/actions/PNG/play"
+				}
+			]
+		},
+		{
+			"Name": "Rewind All Players",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.rewind",
+			"Icon": "imgs/actions/PNG/rewind",
+			"Tooltip": "Rewinds all Players, sync is not guaranteed to be maintained",
+			"PropertyInspectorPath": "ui/rewind.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/rewind"
+				}
+			]
+		},
+		{
+			"Name": "Fast Forward All Players",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.forward",
+			"Icon": "imgs/actions/PNG/forward",
+			"Tooltip": "Fast Forwards all Players, sync is not guaranteed to be maintained",
+			"PropertyInspectorPath": "ui/forward.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/forward"
 				}
 			]
 		}

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title>Rewind All Players</title>
+    <meta charset="utf-8" />
+    <script src="https://sdpi-components.dev/releases/v3/sdpi-components.js"></script>
+</head>
+
+<body>
+    <!--
+        Learn more about property inspector components at https://sdpi-components.dev/docs/components
+    -->
+    <sdpi-item label="Increment By">
+        <sdpi-range setting="nSeconds" min="1" max="60" step="1" default="10" showlabels></sdpi-range>
+    </sdpi-item>
+    <sdpi-item label="Explanation">
+        The Rewind All Players action will rewind all players by the number of seconds specified 
+        above. Holding the button will continue to rewind all players until the button is released. 
+        <br><br>
+        Sync is not guaranteed to be maintained across all players. It is recommended to seek with the player 
+        with the highest priority (International > F1 Live > oldest player) in mind and then manually sync 
+        the other players and data stream afterwards.  
+    </sdpi-item>
+</body>
+
+</html>

@@ -43,3 +43,70 @@ export function syncPlayersToPlayer(player: Player) {
         streamDeck.logger.error("Error syncing players: " + error);
     });
 }
+
+/**
+ * Seek all players by the given number of seconds.
+ * 
+ * @param seconds The number of seconds to seek by.
+ */
+function seekBySeconds(seconds: number) {
+    // get the players
+    gql_client.query({
+        query: gql`
+            query Query {
+                players {
+                    id
+                }
+            }
+        `,
+    }).then((result) => {
+        if (result.errors) {
+            streamDeck.logger.error("Error getting players for seek: " + JSON.stringify(result.errors));
+            return;
+        }
+
+        const players = result.data.players as Player[];
+        // seek all players
+        players.forEach((player) => {
+            gql_client.mutate({
+                mutation: gql`
+                    mutation Mutation($playerSeekToId: ID!, $relative: Float) {
+                        playerSeekTo(id: $playerSeekToId, relative: $relative)
+                    }
+                `,
+                variables: {
+                    playerSeekToId: player.id,
+                    relative: seconds,
+                },
+            }).then((result) => {
+                if (result.errors) {
+                    streamDeck.logger.error("Error seeking: " + JSON.stringify(result.errors));
+                    return;
+                }
+            }).catch((error) => {
+                streamDeck.logger.error("Error seeking: " + error);
+            });
+        });
+    }).catch((error) => {
+        streamDeck.logger.error("Error seeking: " + error);
+    });
+}
+
+/**
+ * Seek all players by the given number of seconds repeatedly until the condition is false.
+ * 
+ * @param condition The condition to check. Must make sure this value is passed by reference, and eventually set to false.
+ * @param seconds The number of seconds to seek by.
+ */
+export function repeatSeekAsync(condition: { value: boolean }, seconds: number) {
+    if (condition.value) {
+        seekBySeconds(seconds);
+        const interval = setInterval(() => {
+            if (!condition.value) {
+                clearInterval(interval);
+                return;
+            }
+            seekBySeconds(seconds);
+        }, 200);
+    }
+}
