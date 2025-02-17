@@ -1,7 +1,8 @@
-import streamDeck, { action, KeyDownEvent, SingletonAction, WillAppearEvent } from "@elgato/streamdeck";
-import { gql_client } from "../plugin";
+import streamDeck, { action, KeyDownEvent, SingletonAction } from "@elgato/streamdeck";
+import { gql_client } from "../graphql";
 import { gql } from "@apollo/client";
 import { Player } from "../mv-types";
+import { getPlayerWithPriority, syncPlayersToPlayer } from "../helpers";
 
 @action({ UUID: "com.f1-tools.multiviewer-streamdeck.pause-play" })
 export class PausePlay extends SingletonAction {
@@ -26,14 +27,11 @@ export class PausePlay extends SingletonAction {
 			`,
 		}).then((result) => {
 			if (result.errors) {
-				streamDeck.logger.error("Error getting player state: " + JSON.stringify(result.errors));
+				streamDeck.logger.error("Error getting player state for play/pause: " + JSON.stringify(result.errors));
 				return;
 			}
-			streamDeck.logger.info("Got player state: " + JSON.stringify(result.data));
 			const players = result.data.players as Player[];
-			playerWithPriority = 
-			players.find((player) => { return player.streamData?.title === "INTERNATIONAL" || player.streamData?.title === "F1 LIVE"; }) 
-				|| players.reduce((prev, curr) => { return prev.id < curr.id ? prev : curr; });
+			playerWithPriority = getPlayerWithPriority(players);
 
 				// get desired state
 				const desiredPausedState = !playerWithPriority.state?.paused;
@@ -54,16 +52,16 @@ export class PausePlay extends SingletonAction {
 						})
 						.then((result) => {
 							if (result.errors) {
-								streamDeck.logger.error("Error setting player state: " + JSON.stringify(result.errors));
+								streamDeck.logger.error("Error setting player state for play/pause: " + JSON.stringify(result.errors));
 								return;
 							}
-							streamDeck.logger.info("Set player state for " + player.streamData?.title + ": " + desiredPausedState);
 						}).catch((error) => {
-							streamDeck.logger.error("Error setting player state: " + error);
+							streamDeck.logger.error("Error setting player state for play/pause: " + error);
 							return;
 						});
 				});
-				// TODO add a sync to the player with priority
+				
+				syncPlayersToPlayer(playerWithPriority);
 
 				// update the icon
 				if (desiredPausedState) {
@@ -72,7 +70,7 @@ export class PausePlay extends SingletonAction {
 					if (ev.action.isKey()) {ev.action.setState(1);}
 				}
 		}).catch((error) => {
-			streamDeck.logger.error("Error getting player state: " + error);
+			streamDeck.logger.error("Error getting player state for play/pause: " + error);
 			return;
 		});
 	}

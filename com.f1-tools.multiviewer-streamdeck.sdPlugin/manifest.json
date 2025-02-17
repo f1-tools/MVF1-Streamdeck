@@ -4,10 +4,25 @@
 	"Author": "F1-Tools",
 	"Actions": [
 		{
-			"Name": "PausePlay",
+			"Name": "Sync All Players",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.sync",
+			"Icon": "imgs/actions/PNG/sync",
+			"Tooltip": "Syncs all players to commentary or the oldest player",
+			"PropertyInspectorPath": "ui/sync.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/sync"
+				}
+			]
+		},
+		{
+			"Name": "Pause/Play All Feeds",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.pause-play",
 			"Icon": "imgs/actions/PNG/pause",
-			"Tooltip": "Pauses or plays all windows",
+			"Tooltip": "Pauses or plays all windows, followed by an automatic sync",
 			"PropertyInspectorPath": "ui/pause-play.html",
 			"Controllers": [
 				"Keypad"
