@@ -1,5 +1,6 @@
 export enum PlayerPickerCaller {
     NONE,
+    SYNC,
     PLAY_PAUSE,
     FORWARD,
     REWIND

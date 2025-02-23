@@ -29,7 +29,7 @@ export function getPlayerWithPriority(players: Player[]): Player {
  * 
  * @param player The player to sync to.
  */
-export function syncPlayersToPlayer(player: Player) {
+export function syncPlayersToPlayer(playerId: string) {
     gql_client.mutate({
         mutation: gql`
             mutation Mutation($playerSyncId: ID!) {
@@ -37,7 +37,7 @@ export function syncPlayersToPlayer(player: Player) {
             }
         `,
         variables: {
-            playerSyncId: player.id,
+            playerSyncId: playerId,
         },
     }).then((result) => {
         if (result.errors) {

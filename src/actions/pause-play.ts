@@ -18,10 +18,15 @@ export class PausePlay extends SingletonAction<Settings> {
 		if (settings.global) {
 			this.globalPlayPause(settings.sync);
 		} else {
-			this.playerSelectorPlayPause(ev);
+			this.openPlayerSelectorForPlayPause(ev);
 		}
 	}
 
+	/**
+	 * Pauses or plays all players that are currently open.
+	 * 
+	 * @param sync whether to sync players after the play/pause action
+	 */
 	private async globalPlayPause(sync: boolean) {
 		let playerWithPriority: Player;
 		// get the current state of the commentary player or oldest player 
@@ -77,7 +82,7 @@ export class PausePlay extends SingletonAction<Settings> {
 				});
 				
 				if (sync) {
-					syncPlayersToPlayer(playerWithPriority);
+					syncPlayersToPlayer(playerWithPriority.id);
 				}
 		}).catch((error) => {
 			streamDeck.logger.error("Error getting player state for play/pause: " + error);
@@ -85,7 +90,12 @@ export class PausePlay extends SingletonAction<Settings> {
 		});
 	}
 
-	private async playerSelectorPlayPause(ev: KeyDownEvent<Settings>) {
+	/**
+	 * Opens the player selector profile for the play/pause action.
+	 * 
+	 * @param ev the key down event used to get the device to switch to the player selector profile
+	 */
+	private async openPlayerSelectorForPlayPause(ev: KeyDownEvent<Settings>) {
 		const newGlobalSettings: GlobalSettings = {
 			playerPickerCaller: PlayerPickerCaller.PLAY_PAUSE
 		};
@@ -93,7 +103,15 @@ export class PausePlay extends SingletonAction<Settings> {
 		switchToPlayerPickerProfile(ev.action.device);
 	}
 
-	static async playerSelectedPlayPause(playerId: string) {
+	/**
+	 * Toggle the play/pause state of the player with the given ID.
+	 * 
+	 * Gets called by the player selector profile after a player has been selected and 
+	 * the action that called the player selector profile was the play/pause action.
+	 * 
+	 * @param playerId the id of the player to pause or play
+	 */
+	public static async playerSelectedPlayPause(playerId: string) {
 		gql_client.mutate({
             mutation: gql`
                 mutation Mutation($playerSetPausedId: ID!) {

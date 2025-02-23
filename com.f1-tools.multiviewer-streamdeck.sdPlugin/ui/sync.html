@@ -11,9 +11,15 @@
     <!--
         Learn more about property inspector components at https://sdpi-components.dev/docs/components
     -->
+    <sdpi-item label="Standard Sync">
+        <sdpi-checkbox setting="standard" default="true"></sdpi-checkbox>
+    </sdpi-item>
     <sdpi-item label="Explanation">
-        The Sync All Players action will sync all players and the data stream. It syncs to the player with the 
-        highest priority (International > F1 Live > oldest player). 
+        The Sync action will sync all players and the data stream. 
+        <br><br>
+        If standard is checked it syncs to the player with the highest priority (International > F1 Live > oldest player). 
+        <br><br>
+        If standard is unchecked it opens the player selector to allow you to choose which player to sync to.
     </sdpi-item>
 </body>
 

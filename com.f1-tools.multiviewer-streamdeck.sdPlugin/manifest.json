@@ -19,10 +19,10 @@
 			]
 		},
 		{
-			"Name": "Sync All Players and Data Stream",
+			"Name": "Sync",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.sync",
 			"Icon": "imgs/actions/PNG/sync",
-			"Tooltip": "Syncs all players and the data stream to commentary or the oldest player",
+			"Tooltip": "Syncs all players",
 			"PropertyInspectorPath": "ui/sync.html",
 			"Controllers": [
 				"Keypad"
@@ -49,10 +49,10 @@
 			]
 		},
 		{
-			"Name": "Rewind All Players",
+			"Name": "Rewind",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.rewind",
 			"Icon": "imgs/actions/PNG/rewind",
-			"Tooltip": "Rewinds all Players, sync is not guaranteed to be maintained",
+			"Tooltip": "Rewinds player(s)",
 			"PropertyInspectorPath": "ui/rewind.html",
 			"Controllers": [
 				"Keypad"
@@ -64,10 +64,10 @@
 			]
 		},
 		{
-			"Name": "Fast Forward All Players",
+			"Name": "Fast Forward",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.forward",
 			"Icon": "imgs/actions/PNG/forward",
-			"Tooltip": "Fast Forwards all Players, sync is not guaranteed to be maintained",
+			"Tooltip": "Fast forwards player(s)",
 			"PropertyInspectorPath": "ui/forward.html",
 			"Controllers": [
 				"Keypad"

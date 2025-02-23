@@ -14,8 +14,8 @@ streamDeck.logger.setLevel(LogLevel.TRACE);
 
 // Register actions.
 streamDeck.actions.registerAction(new PlayerSelector());
-streamDeck.actions.registerAction(new PausePlay());
 streamDeck.actions.registerAction(new Sync());
+streamDeck.actions.registerAction(new PausePlay());
 streamDeck.actions.registerAction(new Forward());
 streamDeck.actions.registerAction(new Rewind());
 

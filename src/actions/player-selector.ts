@@ -6,6 +6,7 @@ import { PausePlay } from "./pause-play";
 import { PlayerPickerCaller } from "../global-settings-type";
 import { json } from "stream/consumers";
 import { get } from "http";
+import { Sync } from "./sync";
 
 type Settings = {
     title: string;
@@ -66,6 +67,9 @@ export class PlayerSelector extends SingletonAction {
         switch (globalSettings.playerPickerCaller) {
             case PlayerPickerCaller.PLAY_PAUSE:
                 PausePlay.playerSelectedPlayPause(playerId);
+                break;
+            case PlayerPickerCaller.SYNC:
+                Sync.playerSelectedSync(playerId);
                 break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);
