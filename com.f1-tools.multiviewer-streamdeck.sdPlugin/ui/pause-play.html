@@ -11,17 +11,20 @@
     <!--
         Learn more about property inspector components at https://sdpi-components.dev/docs/components
     -->
+    <sdpi-item label="Global">
+        <sdpi-checkbox setting="global" default="true" label="If the action should effect all players"></sdpi-checkbox>
+    </sdpi-item>
     <sdpi-item label="Sync after every Play/Pause">
-        <sdpi-checkbox setting="sync" default="true"></sdpi-checkbox>
+        <sdpi-checkbox setting="sync" default="true" label="Defaults to false if global is unchecked"></sdpi-checkbox>
     </sdpi-item>
     <sdpi-item label="Explanation">
-        The Play/Pause All Players action will play or pause all players. After all players are played or paused, there is 
-        an optional sync step that can be performed based on the checkbox above. This is recommended if you are ok with 
-        how MultiViewer syncs the players and the data stream. But if you are like me, the dev, and manually sync the 
-        data stream, I would turn this off.
+        The Play/Pause action allows you to toggle the play/pause state of either all of the players (Global, checked) 
+        or a single player that is selected in the player selector that appears after the action 
+        is triggered (Global, unchecked). 
         <br><br>
-        Sometimes the image state (the play or pause icon) of the button will not match. This is expected and intentional. 
-        It will fix itself after every time this button is pressed.
+        If the action is global then the sync setting will determine if there is an automatic sync after the play/pause
+        action is triggered. This setting is useful because the pause/play action does NOT effect the live timing data stream, 
+        but a sync will pause/play the live timing data stream to match the players.
     </sdpi-item>
 </body>
 

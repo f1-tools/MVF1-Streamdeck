@@ -1,8 +1,13 @@
 import { Player } from "./mv-types";
 import { gql_client } from "./graphql";
 import { gql } from "@apollo/client";
-import streamDeck from "@elgato/streamdeck";
+import streamDeck, { Device, DeviceType } from "@elgato/streamdeck";
+import { PlayerSelector } from "./actions/player-selector";
 
+
+/**
+ * This file holds all of the helper functions that are used by more than one action.
+ */
 
 /**
  * Get the player with the highest priority.
@@ -110,3 +115,25 @@ export function repeatSeekAsync(condition: { value: boolean }, seconds: number) 
         }, 200);
     }
 }
+
+/**
+ * Switch to the Player Picker profile.
+ * 
+ * @returns the string for the 
+ */
+export async function switchToPlayerPickerProfile(device: Device): Promise<void> {
+    let profileString = "";
+    switch (device.type) {
+        case DeviceType.StreamDeckPlus:
+            profileString = "MV Player Picker - StreamDeckPlus";
+            break;
+        default:
+            streamDeck.logger.error("No Profile for " + device.name + " with type " + device.type + ". Contact the developer to get one added.");
+            return;
+    }
+    await PlayerSelector.updatePlayerCache();
+    await PlayerSelector.updatePlayerCache();
+    PlayerSelector.currentPage = 0;
+    streamDeck.profiles.switchToProfile(device.id, profileString);
+}
+

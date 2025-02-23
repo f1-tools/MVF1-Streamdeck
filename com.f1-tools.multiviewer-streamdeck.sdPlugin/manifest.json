@@ -4,6 +4,21 @@
 	"Author": "F1-Tools",
 	"Actions": [
 		{
+			"Name": "Player Selector",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.player-selector",
+			"Icon": "imgs/actions/PNG/blank",
+			"Tooltip": "Selects a player to control",
+			"PropertyInspectorPath": "ui/sync.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/blank"
+				}
+			]
+		},
+		{
 			"Name": "Sync All Players and Data Stream",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.sync",
 			"Icon": "imgs/actions/PNG/sync",
@@ -19,20 +34,17 @@
 			]
 		},
 		{
-			"Name": "Play/Pause All Players",
+			"Name": "Play/Pause",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.pause-play",
-			"Icon": "imgs/actions/PNG/pause",
-			"Tooltip": "Pauses or plays all players, followed by an automatic sync",
+			"Icon": "imgs/actions/PNG/play_pause",
+			"Tooltip": "Pauses or plays all players, or a selected player",
 			"PropertyInspectorPath": "ui/pause-play.html",
 			"Controllers": [
 				"Keypad"
 			],
 			"States": [
 				{
-					"Image": "imgs/actions/PNG/pause"
-				},
-				{
-					"Image": "imgs/actions/PNG/play"
+					"Image": "imgs/actions/PNG/play_pause"
 				}
 			]
 		},
@@ -74,7 +86,7 @@
 	"Icon": "imgs/plugin/marketplace",
 	"SDKVersion": 2,
 	"Software": {
-		"MinimumVersion": "6.4"
+		"MinimumVersion": "6.6"
 	},
 	"OS": [
 		{
@@ -90,5 +102,14 @@
 		"Version": "20",
 		"Debug": "enabled"
 	},
-	"UUID": "com.f1-tools.multiviewer-streamdeck"
+	"UUID": "com.f1-tools.multiviewer-streamdeck",
+	"Profiles": [
+		{
+			"Name": "MV Player Picker - StreamDeckPlus",
+            "DeviceType": 7,
+            "Readonly": true,
+            "DontAutoSwitchWhenInstalled": true,
+            "AutoInstall": true		
+		}
+	]	
 }
