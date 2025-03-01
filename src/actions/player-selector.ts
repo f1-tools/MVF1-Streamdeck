@@ -3,10 +3,11 @@ import { gql_client } from "../graphql";
 import { gql } from "@apollo/client";
 import { Player } from "../mv-types";
 import { PausePlay } from "./pause-play";
-import { PlayerPickerCaller } from "../global-settings-type";
+import { PlayerPickerCaller, PlayerPickerDisplay } from "../global-types";
 import { Sync } from "./sync";
 import { Forward } from "./forward";
 import { Rewind } from "./rewind";
+import { Speedometer } from "./speedometer";
 
 type Settings = {
     title: string;
@@ -76,6 +77,9 @@ export class PlayerSelector extends SingletonAction {
                 break;
             case PlayerPickerCaller.REWIND:
                 Rewind.playerSelectedForOneTimeRewind(playerId);
+                break;
+            case PlayerPickerCaller.SPEEDOMETER:
+                Speedometer.playerSelectedForSpeedometer(playerId);
                 break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);
@@ -151,7 +155,7 @@ export class PlayerSelector extends SingletonAction {
      * 
      * @returns The list of players sorted by id.
      */
-    static async updatePlayerCache() {
+    static async updatePlayerCache(playerPickerDisplay: PlayerPickerDisplay = PlayerPickerDisplay.ALL): Promise<void> {
         try {
             const result = await gql_client.query({
                 query: gql`
@@ -176,7 +180,11 @@ export class PlayerSelector extends SingletonAction {
                 return;
             }
 
-            const players = result.data.players as Player[];
+            let players = result.data.players as Player[];
+            // filter the players if needed
+            if (playerPickerDisplay === PlayerPickerDisplay.ONBOARDS_ONLY) {
+                players = players.filter((player) => player.driverData !== null);
+            }
             PlayerSelector.playerCache = players.sort(PlayerSelector.playerSort);
         } catch (error) {
             streamDeck.logger.error("Error getting players for player selector: " + error);

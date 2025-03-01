@@ -5,7 +5,8 @@ import { Sync } from "./actions/sync";
 import { Forward } from "./actions/forward";
 import { Rewind } from "./actions/rewind";
 import { PlayerSelector } from "./actions/player-selector";
-import { GlobalSettings, PlayerPickerCaller } from "./global-settings-type";
+import { GlobalSettings, PlayerPickerCaller } from "./global-types";
+import { Speedometer } from "./actions/speedometer";
 
 
 // We can enable "trace" logging so that all messages between the Stream Deck, 
@@ -18,6 +19,7 @@ streamDeck.actions.registerAction(new Sync());
 streamDeck.actions.registerAction(new PausePlay());
 streamDeck.actions.registerAction(new Forward());
 streamDeck.actions.registerAction(new Rewind());
+streamDeck.actions.registerAction(new Speedometer());
 
 // Test connection to MV
 streamDeck.system.onSystemDidWakeUp(() => {

@@ -3,6 +3,7 @@ import { gql_client } from "./graphql";
 import { gql } from "@apollo/client";
 import streamDeck, { Device, DeviceType } from "@elgato/streamdeck";
 import { PlayerSelector } from "./actions/player-selector";
+import { PlayerPickerDisplay } from "./global-types";
 
 
 /**
@@ -147,7 +148,8 @@ export function seekPlayerBySeconds(playerId: string, seconds: number) {
  * 
  * @returns the string for the 
  */
-export async function switchToPlayerPickerProfile(device: Device): Promise<void> {
+export async function switchToPlayerPickerProfile(device: Device, 
+    playerPickerDisplay: PlayerPickerDisplay = PlayerPickerDisplay.ALL): Promise<void> {
     let profileString = "";
     switch (device.type) {
         case DeviceType.StreamDeckPlus:
@@ -157,8 +159,7 @@ export async function switchToPlayerPickerProfile(device: Device): Promise<void>
             streamDeck.logger.error("No Profile for " + device.name + " with type " + device.type + ". Contact the developer to get one added.");
             return;
     }
-    await PlayerSelector.updatePlayerCache();
-    await PlayerSelector.updatePlayerCache();
+    await PlayerSelector.updatePlayerCache(playerPickerDisplay);
     PlayerSelector.currentPage = 0;
     streamDeck.profiles.switchToProfile(device.id, profileString);
 }

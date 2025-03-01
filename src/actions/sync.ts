@@ -3,7 +3,7 @@ import { gql_client } from "../graphql";
 import { gql } from "@apollo/client";
 import { Player } from "../mv-types";
 import { getPlayerWithPriority, switchToPlayerPickerProfile, syncPlayersToPlayer } from "../helpers";
-import { GlobalSettings, PlayerPickerCaller } from "../global-settings-type";
+import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
 type Settings = {
     standard: boolean; // whether to allow the user to select a player to sync to

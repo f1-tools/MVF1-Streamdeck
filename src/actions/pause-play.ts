@@ -3,7 +3,7 @@ import { gql_client } from "../graphql";
 import { gql } from "@apollo/client";
 import { Player } from "../mv-types";
 import { getPlayerWithPriority, switchToPlayerPickerProfile, syncPlayersToPlayer } from "../helpers";
-import { GlobalSettings, PlayerPickerCaller } from "../global-settings-type";
+import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
 type Settings = {
 	global: boolean; // whether to apply the action to all players or to open the player selector profile

@@ -3,9 +3,15 @@ export enum PlayerPickerCaller {
     SYNC,
     PLAY_PAUSE,
     FORWARD,
-    REWIND
+    REWIND,
+    SPEEDOMETER
 }
 
 export type GlobalSettings = {
     playerPickerCaller: PlayerPickerCaller;
+}
+
+export enum PlayerPickerDisplay {
+    ALL,
+    ONBOARDS_ONLY
 }

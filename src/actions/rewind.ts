@@ -1,6 +1,6 @@
 import streamDeck, { action, DidReceiveSettingsEvent, KeyDownEvent, KeyUpEvent, SingletonAction } from "@elgato/streamdeck";
 import { repeatSeekAsync, seekPlayerBySeconds, switchToPlayerPickerProfile } from "../helpers";
-import { GlobalSettings, PlayerPickerCaller } from "../global-settings-type";
+import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
 type Settings = {
     global: boolean; // whether to seek all players or just the selected player

@@ -1,5 +1,5 @@
 {
-	"Name": "MultiViewer StreamDeck",
+	"Name": "MultiViewer",
 	"Version": "0.1.0.0",
 	"Author": "F1-Tools",
 	"Actions": [
@@ -16,7 +16,8 @@
 				{
 					"Image": "imgs/actions/PNG/blank"
 				}
-			]
+			],
+			"VisibleInActionsList": false
 		},
 		{
 			"Name": "Sync",
@@ -77,9 +78,24 @@
 					"Image": "imgs/actions/PNG/forward"
 				}
 			]
+		},
+		{
+			"Name": "Toggle Speedometer",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.speedometer",
+			"Icon": "imgs/actions/PNG/speedometer_one",
+			"Tooltip": "Toggle the speedometer on driver cam player(s)",
+			"PropertyInspectorPath": "ui/speedometer.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/speedometer_one"
+				}
+			]
 		}
 	],
-	"Category": "MultiViewer StreamDeck",
+	"Category": "MultiViewer",
 	"CategoryIcon": "imgs/plugin/mv_logo",
 	"CodePath": "bin/plugin.js",
 	"Description": "A Stream Deck Plugin used for controlling the MutliViewer application and its many windows. ",
