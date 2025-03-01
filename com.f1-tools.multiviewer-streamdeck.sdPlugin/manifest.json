@@ -93,6 +93,21 @@
 					"Image": "imgs/actions/PNG/speedometer_one"
 				}
 			]
+		},
+		{
+			"Name": "Cycle Header Mode",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.header",
+			"Icon": "imgs/actions/PNG/switch_header",
+			"Tooltip": "Cycle through driver header modes on driver cam player(s)",
+			"PropertyInspectorPath": "ui/header.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/switch_header"
+				}
+			]
 		}
 	],
 	"Category": "MultiViewer",

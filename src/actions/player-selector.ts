@@ -8,6 +8,7 @@ import { Sync } from "./sync";
 import { Forward } from "./forward";
 import { Rewind } from "./rewind";
 import { Speedometer } from "./speedometer";
+import { Header } from "./header";
 
 type Settings = {
     title: string;
@@ -80,6 +81,9 @@ export class PlayerSelector extends SingletonAction {
                 break;
             case PlayerPickerCaller.SPEEDOMETER:
                 Speedometer.playerSelectedForSpeedometer(playerId);
+                break;
+            case PlayerPickerCaller.HEADER:
+                Header.playerSelectedForHeader(playerId);
                 break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);

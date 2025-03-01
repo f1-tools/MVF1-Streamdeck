@@ -4,7 +4,8 @@ export enum PlayerPickerCaller {
     PLAY_PAUSE,
     FORWARD,
     REWIND,
-    SPEEDOMETER
+    SPEEDOMETER,
+    HEADER
 }
 
 export type GlobalSettings = {
