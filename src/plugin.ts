@@ -8,6 +8,7 @@ import { PlayerSelector } from "./actions/player-selector";
 import { Speedometer } from "./actions/speedometer";
 import { Header } from "./actions/header";
 import { Fullscreen } from "./actions/fullscreen";
+import { AlwaysOnTop } from "./actions/always-on-top";
 
 
 // We can enable "trace" logging so that all messages between the Stream Deck, 
@@ -23,6 +24,7 @@ streamDeck.actions.registerAction(new Rewind());
 streamDeck.actions.registerAction(new Speedometer());
 streamDeck.actions.registerAction(new Header());
 streamDeck.actions.registerAction(new Fullscreen());
+streamDeck.actions.registerAction(new AlwaysOnTop());
 
 // Test connection to MV
 streamDeck.system.onSystemDidWakeUp(() => {

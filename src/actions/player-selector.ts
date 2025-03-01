@@ -10,6 +10,7 @@ import { Rewind } from "./rewind";
 import { Speedometer } from "./speedometer";
 import { Header } from "./header";
 import { Fullscreen } from "./fullscreen";
+import { AlwaysOnTop } from "./always-on-top";
 
 type Settings = {
     title: string;
@@ -88,6 +89,9 @@ export class PlayerSelector extends SingletonAction {
                 break;
             case PlayerPickerCaller.FULLSCREEN:
                 Fullscreen.playerSelectedFullscreen(playerId);
+                break;
+            case PlayerPickerCaller.ALWAYS_ON_TOP:
+                AlwaysOnTop.playerSelectedForAlwaysOnTop(playerId);
                 break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);

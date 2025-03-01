@@ -6,7 +6,8 @@ export enum PlayerPickerCaller {
     REWIND,
     SPEEDOMETER,
     HEADER,
-    FULLSCREEN
+    FULLSCREEN,
+    ALWAYS_ON_TOP
 }
 
 export type GlobalSettings = {

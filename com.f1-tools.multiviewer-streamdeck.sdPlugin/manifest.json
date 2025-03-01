@@ -113,7 +113,7 @@
 			"Name": "Toggle Fullscreen",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.fullscreen",
 			"Icon": "imgs/actions/PNG/fullscreen",
-			"Tooltip": "Toggle if player(s) fullscreen state",
+			"Tooltip": "Toggle if player is fullscreen",
 			"PropertyInspectorPath": "ui/fullscreen.html",
 			"Controllers": [
 				"Keypad"
@@ -121,6 +121,21 @@
 			"States": [
 				{
 					"Image": "imgs/actions/PNG/fullscreen"
+				}
+			]
+		},
+		{
+			"Name": "Toggle Always On Top",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.always-on-top",
+			"Icon": "imgs/actions/PNG/on_top",
+			"Tooltip": "Toggle if player(s) are always on top",
+			"PropertyInspectorPath": "ui/always-on-top.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/on_top"
 				}
 			]
 		}
