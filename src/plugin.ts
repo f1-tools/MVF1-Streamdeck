@@ -7,6 +7,7 @@ import { Rewind } from "./actions/rewind";
 import { PlayerSelector } from "./actions/player-selector";
 import { Speedometer } from "./actions/speedometer";
 import { Header } from "./actions/header";
+import { Fullscreen } from "./actions/fullscreen";
 
 
 // We can enable "trace" logging so that all messages between the Stream Deck, 
@@ -21,6 +22,7 @@ streamDeck.actions.registerAction(new Forward());
 streamDeck.actions.registerAction(new Rewind());
 streamDeck.actions.registerAction(new Speedometer());
 streamDeck.actions.registerAction(new Header());
+streamDeck.actions.registerAction(new Fullscreen());
 
 // Test connection to MV
 streamDeck.system.onSystemDidWakeUp(() => {

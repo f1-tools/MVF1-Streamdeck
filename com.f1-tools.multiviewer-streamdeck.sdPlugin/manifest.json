@@ -108,6 +108,21 @@
 					"Image": "imgs/actions/PNG/switch_header"
 				}
 			]
+		},
+		{
+			"Name": "Toggle Fullscreen",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.fullscreen",
+			"Icon": "imgs/actions/PNG/fullscreen",
+			"Tooltip": "Toggle if player(s) fullscreen state",
+			"PropertyInspectorPath": "ui/fullscreen.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/fullscreen"
+				}
+			]
 		}
 	],
 	"Category": "MultiViewer",

@@ -9,6 +9,7 @@ import { Forward } from "./forward";
 import { Rewind } from "./rewind";
 import { Speedometer } from "./speedometer";
 import { Header } from "./header";
+import { Fullscreen } from "./fullscreen";
 
 type Settings = {
     title: string;
@@ -84,6 +85,9 @@ export class PlayerSelector extends SingletonAction {
                 break;
             case PlayerPickerCaller.HEADER:
                 Header.playerSelectedForHeader(playerId);
+                break;
+            case PlayerPickerCaller.FULLSCREEN:
+                Fullscreen.playerSelectedFullscreen(playerId);
                 break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);
