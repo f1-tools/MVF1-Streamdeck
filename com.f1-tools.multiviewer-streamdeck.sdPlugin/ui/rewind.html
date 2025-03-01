@@ -11,16 +11,23 @@
     <!--
         Learn more about property inspector components at https://sdpi-components.dev/docs/components
     -->
+    <sdpi-item label="Global">
+        <sdpi-checkbox setting="global" default="true" label="If action should effect all players"></sdpi-checkbox>
+    </sdpi-item>
     <sdpi-item label="Increment By">
         <sdpi-range setting="nSeconds" min="1" max="60" step="1" default="10" showlabels></sdpi-range>
     </sdpi-item>
     <sdpi-item label="Explanation">
-        The Rewind All Players action will rewind all players by the number of seconds specified 
-        above. Holding the button will continue to rewind all players until the button is released. 
+        The Rewind action will rewind all players or a single player by the number of seconds specified 
+        above. 
         <br><br>
+        If global is checked holding the button will continue to rewind all players until the button is released. 
         Sync is not guaranteed to be maintained across all players. It is recommended to seek with the player 
         with the highest priority (International > F1 Live > oldest player) in mind and then manually sync 
         the other players and data stream afterwards.  
+        <br><br>
+        If global is unchecked it opens the player selector to allow you to choose which player to skip backward on.
+        It will only skip backward on the selected player once, holding down the button will NOT continue to skip backward.
     </sdpi-item>
 </body>
 

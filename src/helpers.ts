@@ -117,6 +117,32 @@ export function repeatSeekAsync(condition: { value: boolean }, seconds: number) 
 }
 
 /**
+ * Seek a players by the given number of seconds.
+ * 
+ * @param seconds The number of seconds to seek by.
+ */
+export function seekPlayerBySeconds(playerId: string, seconds: number) {
+    gql_client.mutate({
+        mutation: gql`
+            mutation Mutation($playerSeekToId: ID!, $relative: Float) {
+                playerSeekTo(id: $playerSeekToId, relative: $relative)
+            }
+        `,
+        variables: {
+            playerSeekToId: playerId,
+            relative: seconds,
+        },
+    }).then((result) => {
+        if (result.errors) {
+            streamDeck.logger.error("Error seeking: " + JSON.stringify(result.errors));
+            return;
+        }
+    }).catch((error) => {
+        streamDeck.logger.error("Error seeking: " + error);
+    }); 
+}
+
+/**
  * Switch to the Player Picker profile.
  * 
  * @returns the string for the 

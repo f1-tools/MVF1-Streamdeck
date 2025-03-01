@@ -1,12 +1,12 @@
 import streamDeck, { action, SingletonAction, JsonObject, WillAppearEvent, KeyDownEvent, Action, Device, DialAction, KeyAction } from "@elgato/streamdeck";
 import { gql_client } from "../graphql";
 import { gql } from "@apollo/client";
-import { Player, PlayerDriverData } from "../mv-types";
+import { Player } from "../mv-types";
 import { PausePlay } from "./pause-play";
 import { PlayerPickerCaller } from "../global-settings-type";
-import { json } from "stream/consumers";
-import { get } from "http";
 import { Sync } from "./sync";
+import { Forward } from "./forward";
+import { Rewind } from "./rewind";
 
 type Settings = {
     title: string;
@@ -70,6 +70,12 @@ export class PlayerSelector extends SingletonAction {
                 break;
             case PlayerPickerCaller.SYNC:
                 Sync.playerSelectedSync(playerId);
+                break;
+            case PlayerPickerCaller.FORWARD:
+                Forward.playerSelectedForOneTimeForward(playerId);
+                break;
+            case PlayerPickerCaller.REWIND:
+                Rewind.playerSelectedForOneTimeRewind(playerId);
                 break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);
