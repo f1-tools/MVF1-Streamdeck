@@ -6,7 +6,7 @@ import { gql } from "@apollo/client";
 import { Player, DriverHeaderMode } from "../mv-types";
 
 type Settings = {
-    global: boolean; // whether to seek all players or just the selected player
+    global: boolean; // whether to cycle all players or just the selected player
 };
 
 @action({ UUID: "com.f1-tools.multiviewer-streamdeck.header" })
@@ -62,27 +62,7 @@ export class Header extends SingletonAction<Settings> {
             Header.globalHeaderState = nextHeaderState;
 
             for (const playerId of onboardPlayerIds) {
-                gql_client.mutate({
-                    mutation: gql`
-                        mutation PlayerSetDriverHeaderMode($playerSetDriverHeaderModeId: ID!, $mode: DriverHeaderMode!) {
-                            playerSetDriverHeaderMode(id: $playerSetDriverHeaderModeId, mode: $mode)
-                        }
-                    `,
-                    variables: {
-                        playerSetDriverHeaderModeId: playerId,
-                        mode: nextHeaderState,
-                    },
-                }).then((result) => {
-                    if (result.errors) {
-                        streamDeck.logger.error("Error cycling header: " + JSON.stringify(result.errors));
-                        return;
-                    }
-
-                    // keep track of the header state
-                    Header.playerHeaderStates.set(playerId, nextHeaderState);
-                }).catch((error) => {
-                    streamDeck.logger.error("Error toggling cycling header: " + error);
-                });
+                Header.doMutation(playerId, nextHeaderState);
             }
         }).catch((error) => {
             streamDeck.logger.error("Error getting players for headers: " + error);
@@ -90,8 +70,7 @@ export class Header extends SingletonAction<Settings> {
     }
 
     /**
-     * Opens the player selector profile for the user to select a player to seek.
-     * The seek action will only happen once. There is no holding down for a single player seek.
+     * Opens the player selector profile for the user to select a player to cycle the header on.
      * 
      * @param ev the key down event used to get the device to switch to the player selector profile
      */
@@ -105,9 +84,9 @@ export class Header extends SingletonAction<Settings> {
 
     /**
      * Called when a player is selected in the player picker profile.
-     * Toggles the speedometer state of the selected player.
+     * cycles the header state of the selected player.
      * 
-     * @param playerId The id of the player to seek.
+     * @param playerId The id of the player to cycle header on.
      */
     public static async playerSelectedForHeader(playerId: string) {
         const headerState = Header.playerHeaderStates.get(playerId);
@@ -120,6 +99,15 @@ export class Header extends SingletonAction<Settings> {
             const nextIndex = (currentIndex + 1) % headerStates.length;
             nextHeaderState = headerStates[nextIndex];
         }
+        Header.doMutation(playerId, nextHeaderState);
+    }
+
+    /**
+     * Does the actual mutation to set the header state
+     * @param playerId the player to set the header state for
+     * @param nextHeaderState the state to set the header to
+     */
+    private static async doMutation(playerId: string, nextHeaderState: DriverHeaderMode) {
         gql_client.mutate({
             mutation: gql`
                 mutation PlayerSetDriverHeaderMode($playerSetDriverHeaderModeId: ID!, $mode: DriverHeaderMode!) {
@@ -139,7 +127,7 @@ export class Header extends SingletonAction<Settings> {
             // keep track of the header state
             Header.playerHeaderStates.set(playerId, nextHeaderState);
         }).catch((error) => {
-            streamDeck.logger.error("Error toggling cycling header: " + error);
+            streamDeck.logger.error("Error cycling header: " + error);
         });
     }
 }

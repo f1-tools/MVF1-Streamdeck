@@ -6,7 +6,7 @@ import { gql } from "@apollo/client";
 import { Player } from "../mv-types";
 
 type Settings = {
-    global: boolean; // whether to seek all players or just the selected player
+    global: boolean; // whether to toggle all players or just the selected player
 };
 
 @action({ UUID: "com.f1-tools.multiviewer-streamdeck.speedometer" })
@@ -49,23 +49,7 @@ export class Speedometer extends SingletonAction<Settings> {
             const onboardPlayerIds = onboardPlayers.map((player) => player.id);
             
             for (const playerId of onboardPlayerIds) {
-                gql_client.mutate({
-                    mutation: gql`
-                        mutation Mutation($playerSetSpeedometerVisibilityId: ID!) {
-                            playerSetSpeedometerVisibility(id: $playerSetSpeedometerVisibilityId)
-                        }
-                    `,
-                    variables: {
-                        playerSetSpeedometerVisibilityId: playerId
-                    },
-                }).then((result) => {
-                    if (result.errors) {
-                        streamDeck.logger.error("Error toggling speedometer: " + JSON.stringify(result.errors));
-                        return;
-                    }
-                }).catch((error) => {
-                    streamDeck.logger.error("Error toggling speedometer: " + error);
-                });
+                Speedometer.doMutation(playerId);
             }
         }).catch((error) => {
             streamDeck.logger.error("Error getting players for speedometer: " + error);
@@ -73,8 +57,7 @@ export class Speedometer extends SingletonAction<Settings> {
     }
 
     /**
-     * Opens the player selector profile for the user to select a player to seek.
-     * The seek action will only happen once. There is no holding down for a single player seek.
+     * Opens the player selector profile for the user to select a player to toggle speedometer on.
      * 
      * @param ev the key down event used to get the device to switch to the player selector profile
      */
@@ -90,9 +73,13 @@ export class Speedometer extends SingletonAction<Settings> {
      * Called when a player is selected in the player picker profile.
      * Toggles the speedometer state of the selected player.
      * 
-     * @param playerId The id of the player to seek.
+     * @param playerId The id of the player to toggle speedometer on.
      */
     public static async playerSelectedForSpeedometer(playerId: string) {
+        Speedometer.doMutation(playerId);
+    }
+
+    private static async doMutation(playerId: string) {
         gql_client.mutate({
             mutation: gql`
                 mutation Mutation($playerSetSpeedometerVisibilityId: ID!) {
