@@ -9,6 +9,7 @@ import { Speedometer } from "./actions/speedometer";
 import { Header } from "./actions/header";
 import { Fullscreen } from "./actions/fullscreen";
 import { AlwaysOnTop } from "./actions/always-on-top";
+import { Mute } from "./actions/mute";
 
 
 // We can enable "trace" logging so that all messages between the Stream Deck, 
@@ -25,6 +26,7 @@ streamDeck.actions.registerAction(new Speedometer());
 streamDeck.actions.registerAction(new Header());
 streamDeck.actions.registerAction(new Fullscreen());
 streamDeck.actions.registerAction(new AlwaysOnTop());
+streamDeck.actions.registerAction(new Mute());
 
 // Test connection to MV
 streamDeck.system.onSystemDidWakeUp(() => {

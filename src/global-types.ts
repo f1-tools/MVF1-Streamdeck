@@ -7,7 +7,8 @@ export enum PlayerPickerCaller {
     SPEEDOMETER,
     HEADER,
     FULLSCREEN,
-    ALWAYS_ON_TOP
+    ALWAYS_ON_TOP,
+    MUTE
 }
 
 export type GlobalSettings = {

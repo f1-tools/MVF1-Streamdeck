@@ -11,6 +11,7 @@ import { Speedometer } from "./speedometer";
 import { Header } from "./header";
 import { Fullscreen } from "./fullscreen";
 import { AlwaysOnTop } from "./always-on-top";
+import { Mute } from "./mute";
 
 type Settings = {
     title: string;
@@ -92,6 +93,9 @@ export class PlayerSelector extends SingletonAction {
                 break;
             case PlayerPickerCaller.ALWAYS_ON_TOP:
                 AlwaysOnTop.playerSelectedForAlwaysOnTop(playerId);
+                break;
+            case PlayerPickerCaller.MUTE:
+                Mute.playerSelectedForMute(playerId);
                 break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);

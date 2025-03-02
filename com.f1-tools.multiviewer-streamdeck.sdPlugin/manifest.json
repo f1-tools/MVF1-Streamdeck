@@ -138,6 +138,21 @@
 					"Image": "imgs/actions/PNG/on_top"
 				}
 			]
+		},
+		{
+			"Name": "Mute",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.mute",
+			"Icon": "imgs/actions/PNG/mute",
+			"Tooltip": "Toggle if player(s) are always on top",
+			"PropertyInspectorPath": "ui/mute.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/mute"
+				}
+			]
 		}
 	],
 	"Category": "MultiViewer",
