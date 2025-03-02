@@ -164,3 +164,114 @@ export async function switchToPlayerPickerProfile(device: Device,
     streamDeck.profiles.switchToProfile(device.id, profileString);
 }
 
+
+/**
+ * Change the volume of all players by the given percent.
+ * 
+ * @param nPercent The percent to change the volume by.
+ */
+export async function changeAllPlayersVolumeBy(nPercent: number) {
+    gql_client.query({
+        query: gql`
+            query State {
+                players {
+                    state {
+                        volume
+                    }
+                    id
+                }
+            }
+        `,
+    }).then((result) => {
+        if (result.errors) {
+            streamDeck.logger.error("Error getting players for volume change: " + JSON.stringify(result.errors));
+            return;
+        }
+
+        const players = result.data.players as Player[];
+        players.forEach((player) => {
+            let newVolume = (player.state?.volume ?? 0.0) + nPercent; // 0-100
+            newVolume = newVolume > 100.0 ? 100.0 : newVolume;
+            newVolume = newVolume < 0.0 ? 0.0 : newVolume;
+            gql_client.mutate({
+                mutation: gql`
+                    mutation PlayerSetVolume($playerSetVolumeId: ID!, $volume: Float!, $playerSetMutedId: ID!, $muted: Boolean) {
+                        playerSetVolume(id: $playerSetVolumeId, volume: $volume)
+                        playerSetMuted(id: $playerSetMutedId, muted: $muted)
+                    }
+                `,
+                variables: {
+                    playerSetVolumeId: player.id,
+                    volume: newVolume,
+                    playerSetMutedId: player.id,
+                    muted: false
+                },
+            }).then((result) => {
+                if (result.errors) {
+                    streamDeck.logger.error("Error setting volume: " + JSON.stringify(result.errors));
+                    return;
+                }
+            }).catch((error) => {
+                streamDeck.logger.error("Error setting volume: " + error);
+            });
+        });
+    }).catch((error) => {
+        streamDeck.logger.error("Error getting players for volume change: " + error);
+    });
+}
+
+/**
+ * Change the volume of the player by the given percent.
+ * 
+ * @param playerId The id of the player to change the volume of.
+ * @param nPercent The percent to change the volume by.
+ */
+export async function changePlayerVolumeBy(playerId: string, nPercent: number) {
+    gql_client.query({
+        query: gql`
+            query Player($playerId: ID!) {
+                player(id: $playerId) {
+                    state {
+                        volume
+                    }
+                }
+            }
+        `,
+        variables: {
+            playerId: playerId,
+        },
+    }).then((result) => {
+        if (result.errors) {
+            streamDeck.logger.error("Error getting player for volume change: " + JSON.stringify(result.errors));
+            return;
+        }
+
+        const player = result.data.player as Player;
+        let newVolume = (player.state?.volume ?? 0.0) + nPercent; // 0-100
+        newVolume = newVolume > 100.0 ? 100.0 : newVolume;
+        newVolume = newVolume < 0.0 ? 0.0 : newVolume;
+        gql_client.mutate({
+            mutation: gql`
+                mutation PlayerSetVolume($playerSetVolumeId: ID!, $volume: Float!, $playerSetMutedId: ID!, $muted: Boolean) {
+                    playerSetVolume(id: $playerSetVolumeId, volume: $volume)
+                    playerSetMuted(id: $playerSetMutedId, muted: $muted)
+                }
+            `,
+            variables: {
+                playerSetVolumeId: playerId,
+                volume: newVolume,
+                playerSetMutedId: playerId,
+                muted: false
+            },
+        }).then((result) => {
+            if (result.errors) {
+                streamDeck.logger.error("Error setting volume: " + JSON.stringify(result.errors));
+                return;
+            }
+        }).catch((error) => {
+            streamDeck.logger.error("Error setting volume: " + error);
+        });
+    }).catch((error) => {
+        streamDeck.logger.error("Error getting player for volume change: " + error);
+    });
+}

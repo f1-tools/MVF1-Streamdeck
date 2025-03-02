@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <title>Volume Up</title>
+    <meta charset="utf-8" />
+    <script src="https://sdpi-components.dev/releases/v3/sdpi-components.js"></script>
+</head>
+
+<body>
+    <!--
+        Learn more about property inspector components at https://sdpi-components.dev/docs/components
+    -->
+    <sdpi-item label="Global">
+        <sdpi-checkbox setting="global" default="true" label="If action should effect all players"></sdpi-checkbox>
+    </sdpi-item>
+    <sdpi-item label="Increment By">
+        <sdpi-range setting="nPercent" min="10" max="50" step="5" default="25" showlabels></sdpi-range>
+    </sdpi-item>
+    <sdpi-item label="Info">
+        The Volume Up action will increase the volume of all players or a single player by the percentage specified above. 
+        Editing the volume of any player also turns off mute on it.
+        <br><br>
+        If global is checked the action will effect all players.
+        <br><br>
+        If global is unchecked it opens the player selector to allow you to choose which player to increase the volume on.
+    </sdpi-item>
+</body>
+
+</html>

@@ -12,6 +12,8 @@ import { Header } from "./header";
 import { Fullscreen } from "./fullscreen";
 import { AlwaysOnTop } from "./always-on-top";
 import { Mute } from "./mute";
+import { VolumeUp } from "./volume-up";
+import { VolumeDown } from "./volume-down";
 
 type Settings = {
     title: string;
@@ -96,6 +98,12 @@ export class PlayerSelector extends SingletonAction {
                 break;
             case PlayerPickerCaller.MUTE:
                 Mute.playerSelectedForMute(playerId);
+                break;
+            case PlayerPickerCaller.VOLUME_UP:
+                VolumeUp.playerSelectedForVolumeUp(playerId);
+                break;
+            case PlayerPickerCaller.VOLUME_DOWN:
+                VolumeDown.playerSelectedForVolumeDown(playerId);
                 break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);

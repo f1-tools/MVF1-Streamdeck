@@ -143,7 +143,7 @@
 			"Name": "Mute",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.mute",
 			"Icon": "imgs/actions/PNG/mute",
-			"Tooltip": "Toggle if player(s) are always on top",
+			"Tooltip": "Toggle mute of player(s)",
 			"PropertyInspectorPath": "ui/mute.html",
 			"Controllers": [
 				"Keypad"
@@ -151,6 +151,36 @@
 			"States": [
 				{
 					"Image": "imgs/actions/PNG/mute"
+				}
+			]
+		},
+		{
+			"Name": "Volume Up",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.volume-up",
+			"Icon": "imgs/actions/PNG/volume_up",
+			"Tooltip": "Increase volume of player(s)",
+			"PropertyInspectorPath": "ui/volume-up.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/volume_up"
+				}
+			]
+		},
+		{
+			"Name": "Volume Down",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.volume-down",
+			"Icon": "imgs/actions/PNG/volume_down",
+			"Tooltip": "Decrease volume of player(s)",
+			"PropertyInspectorPath": "ui/volume-down.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/volume_down"
 				}
 			]
 		}

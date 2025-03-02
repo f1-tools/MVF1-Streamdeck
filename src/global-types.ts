@@ -8,7 +8,9 @@ export enum PlayerPickerCaller {
     HEADER,
     FULLSCREEN,
     ALWAYS_ON_TOP,
-    MUTE
+    MUTE,
+    VOLUME_UP,
+    VOLUME_DOWN
 }
 
 export type GlobalSettings = {

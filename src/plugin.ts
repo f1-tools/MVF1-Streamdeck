@@ -10,6 +10,8 @@ import { Header } from "./actions/header";
 import { Fullscreen } from "./actions/fullscreen";
 import { AlwaysOnTop } from "./actions/always-on-top";
 import { Mute } from "./actions/mute";
+import { VolumeUp } from "./actions/volume-up";
+import { VolumeDown } from "./actions/volume-down";
 
 
 // We can enable "trace" logging so that all messages between the Stream Deck, 
@@ -27,6 +29,8 @@ streamDeck.actions.registerAction(new Header());
 streamDeck.actions.registerAction(new Fullscreen());
 streamDeck.actions.registerAction(new AlwaysOnTop());
 streamDeck.actions.registerAction(new Mute());
+streamDeck.actions.registerAction(new VolumeUp());
+streamDeck.actions.registerAction(new VolumeDown());
 
 // Test connection to MV
 streamDeck.system.onSystemDidWakeUp(() => {
