@@ -3,7 +3,7 @@ import { gql_client } from "./graphql";
 import { gql } from "@apollo/client";
 import streamDeck, { Device, DeviceType } from "@elgato/streamdeck";
 import { PlayerSelector } from "./actions/player-selector";
-import { PlayerPickerDisplay } from "./global-types";
+import { PlayerPickerCaller, PlayerPickerDisplay } from "./global-types";
 
 
 /**
@@ -150,6 +150,7 @@ export function seekPlayerBySeconds(playerId: string, seconds: number) {
  */
 export async function switchToPlayerPickerProfile(device: Device, 
     playerPickerDisplay: PlayerPickerDisplay = PlayerPickerDisplay.ALL): Promise<void> {
+    const globalSettings = await streamDeck.settings.getGlobalSettings();
     let profileString = "";
     switch (device.type) {
         case DeviceType.StreamDeckPlus:
@@ -159,7 +160,11 @@ export async function switchToPlayerPickerProfile(device: Device,
             streamDeck.logger.error("No Profile for " + device.name + " with type " + device.type + ". Contact the developer to get one added.");
             return;
     }
-    await PlayerSelector.updatePlayerCache(playerPickerDisplay);
+    if (globalSettings.playerPickerCaller === PlayerPickerCaller.SWAP_TWO) {
+        await PlayerSelector.updatePlayerCacheToPossiblePlayers();
+    } else {
+        await PlayerSelector.updatePlayerCache(playerPickerDisplay);
+    }
     PlayerSelector.currentPage = 0;
     streamDeck.profiles.switchToProfile(device.id, profileString);
 }
@@ -273,5 +278,132 @@ export async function changePlayerVolumeBy(playerId: string, nPercent: number) {
         });
     }).catch((error) => {
         streamDeck.logger.error("Error getting player for volume change: " + error);
+    });
+}
+
+/**
+ * Find the oldest player overall. 
+ * 
+ * This is the player with the lowest id.
+ */
+export async function findOldestPlayerId(): Promise<string> {
+    try {
+        const result = await gql_client.query({
+            query: gql`
+                query Query {
+                    players {
+                        id
+                    }
+                }
+            `,
+        });
+
+        if (result.errors) {
+            streamDeck.logger.error("Error finding oldest player: " + JSON.stringify(result.errors));
+            throw new Error("Error finding oldest player");
+        }
+
+        const players = result.data.players as Player[];
+        // find the player with the lowest id
+        return players.reduce((prev, curr) => { return prev.id < curr.id ? prev : curr; }).id;
+    } catch (error) {
+        streamDeck.logger.error("Error finding oldest player: " + error);
+        throw new Error("Error finding oldest player");
+    }
+}
+
+/**
+ * Wait for the player to be ready and then sync it to the oldest player.
+ * Also syncs the new players mute and volume state to what the old player had.
+ * 
+ * @param iteration The number of times this function has been called for timeout purposes.
+ * @param newPlayerId The id of the new player we are waiting for.
+ * @param oldPlayer The old player for the volume and mute state.
+ * @param oldestPlayerId The id of the oldest player to sync to.
+ */
+export function waitToSync(iteration: number, newPlayerId: string, oldPlayer: Player, oldestPlayerId: string) {
+    //base case for timeout
+    if (iteration > 100) {
+        streamDeck.logger.error("Timeout waiting for player to be ready.");
+        return;
+    }
+
+    //  check if the player is ready
+    gql_client.query({
+        query: gql`
+            query Player($playerId: ID!) {
+                player(id: $playerId) {
+                    state {
+                        currentTime
+                        interpolatedCurrentTime
+                    }
+                }
+            }
+        `,
+        variables: {
+            playerId: newPlayerId,
+        },
+    }).then((result) => {
+        if (result.errors) {
+            streamDeck.logger.trace("waiting for player to be ready: ", iteration, "for sync");
+        }
+
+        let currentTime = 0;
+        let interpolatedCurrentTime = 0;
+        try {
+            currentTime = result.data.player.state.currentTime || null;
+            interpolatedCurrentTime = result.data.player.state.interpolatedCurrentTime || null;
+        } catch (error) {
+            streamDeck.logger.trace("waiting for player to be ready: ", iteration, "for sync");
+            currentTime = 0;
+            interpolatedCurrentTime = 0;
+        }
+       
+
+        // if the player is not ready wait and try again
+        if ((currentTime === null || currentTime === 0 || currentTime === undefined)
+        && (interpolatedCurrentTime === null || interpolatedCurrentTime === 0 || interpolatedCurrentTime === undefined)) {
+            setTimeout(() => {
+                waitToSync(iteration + 1, newPlayerId, oldPlayer, oldestPlayerId);
+            }, 100);
+        } else {
+            // sync the player to the oldest player
+            syncPlayersToPlayer(oldestPlayerId);
+            // set the new player to the same volume and mute state as the old player
+            setMuteAndVolumeForPlayer(newPlayerId, oldPlayer.state?.volume ?? 0.0, oldPlayer.state?.muted ?? true);
+        }
+    }).catch((error) => {
+        streamDeck.logger.error("Error waiting for player to be ready: " + error);
+    })
+}
+
+/**
+ * Set the volume and mute state for the player.
+ * 
+ * @param playerId the id of the player to set the volume and mute state for.
+ * @param volume the volume to set the player to.
+ * @param muted the mute state to set the player to.
+ */
+function setMuteAndVolumeForPlayer(playerId: string, volume: number, muted: boolean) {
+    gql_client.mutate({
+        mutation: gql`
+            mutation PlayerSetVolume($playerSetVolumeId: ID!, $volume: Float!, $playerSetMutedId: ID!, $muted: Boolean) {
+                playerSetVolume(id: $playerSetVolumeId, volume: $volume)
+                playerSetMuted(id: $playerSetMutedId, muted: $muted)
+            }
+        `,
+        variables: {
+            playerSetVolumeId: playerId,
+            volume: volume,
+            playerSetMutedId: playerId,
+            muted: muted
+        },
+    }).then((result) => {
+        if (result.errors) {
+            streamDeck.logger.error("Error setting volume and mute state: " + JSON.stringify(result.errors));
+            return;
+        }
+    }).catch((error) => {
+        streamDeck.logger.error("Error setting volume and mute state: " + error);
     });
 }

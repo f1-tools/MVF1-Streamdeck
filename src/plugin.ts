@@ -12,6 +12,7 @@ import { AlwaysOnTop } from "./actions/always-on-top";
 import { Mute } from "./actions/mute";
 import { VolumeUp } from "./actions/volume-up";
 import { VolumeDown } from "./actions/volume-down";
+import { Swap } from "./actions/swap";
 
 
 // We can enable "trace" logging so that all messages between the Stream Deck, 
@@ -31,6 +32,7 @@ streamDeck.actions.registerAction(new AlwaysOnTop());
 streamDeck.actions.registerAction(new Mute());
 streamDeck.actions.registerAction(new VolumeUp());
 streamDeck.actions.registerAction(new VolumeDown());
+streamDeck.actions.registerAction(new Swap());
 
 // Test connection to MV
 streamDeck.system.onSystemDidWakeUp(() => {
@@ -42,7 +44,7 @@ streamDeck.devices.onDeviceDidConnect(() => {
     
     streamDeck.devices.forEach((device) => {
         const { id, isConnected, name, size, type } = device;
-        streamDeck.logger.info(`Device connected: 
+        streamDeck.logger.trace(`Device connected: 
             id:${id} 
             isConnected:${isConnected} 
             name:${name} 

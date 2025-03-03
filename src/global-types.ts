@@ -10,7 +10,9 @@ export enum PlayerPickerCaller {
     ALWAYS_ON_TOP,
     MUTE,
     VOLUME_UP,
-    VOLUME_DOWN
+    VOLUME_DOWN,
+    SWAP_ONE,
+    SWAP_TWO
 }
 
 export type GlobalSettings = {
@@ -21,3 +23,5 @@ export enum PlayerPickerDisplay {
     ALL,
     ONBOARDS_ONLY
 }
+
+export const NON_OBC_POSSIBLE_STREAMS = ["INTERNATIONAL", "F1 LIVE", "TRACKER", "DATA"];

@@ -1,9 +1,9 @@
 import streamDeck, { action, SingletonAction, JsonObject, WillAppearEvent, KeyDownEvent, Action, Device, DialAction, KeyAction } from "@elgato/streamdeck";
 import { gql_client } from "../graphql";
 import { gql } from "@apollo/client";
-import { Player } from "../mv-types";
+import { JSONObject, Player, PlayerType } from "../mv-types";
 import { PausePlay } from "./pause-play";
-import { PlayerPickerCaller, PlayerPickerDisplay } from "../global-types";
+import { NON_OBC_POSSIBLE_STREAMS, PlayerPickerCaller, PlayerPickerDisplay } from "../global-types";
 import { Sync } from "./sync";
 import { Forward } from "./forward";
 import { Rewind } from "./rewind";
@@ -14,6 +14,7 @@ import { AlwaysOnTop } from "./always-on-top";
 import { Mute } from "./mute";
 import { VolumeUp } from "./volume-up";
 import { VolumeDown } from "./volume-down";
+import { Swap } from "./swap";
 
 type Settings = {
     title: string;
@@ -61,10 +62,12 @@ export class PlayerSelector extends SingletonAction {
         const globalSettings = await streamDeck.settings.getGlobalSettings();
         const players = PlayerSelector.playerCache;
         let playerId = "-1";
+        let playerTitle = "UNKNOWN";
         if (!ev.payload.isInMultiAction) {
             const playerIndex = PlayerSelector.getPlayerIndex(ev.payload.coordinates.row, 
                 ev.payload.coordinates.column, ev.action.device.size.rows, ev.action.device.size.columns);
             playerId = players[playerIndex].id;
+            playerTitle = players[playerIndex].streamData?.title ?? "UNKNOWN";
         }
         /**
          * Every time a new action that uses the player picker is added, a new case must be added here
@@ -105,6 +108,12 @@ export class PlayerSelector extends SingletonAction {
             case PlayerPickerCaller.VOLUME_DOWN:
                 VolumeDown.playerSelectedForVolumeDown(playerId);
                 break;
+            case PlayerPickerCaller.SWAP_ONE:
+                Swap.firstPlayerSelectedForSwap(playerId);
+                return;
+            case PlayerPickerCaller.SWAP_TWO:
+                Swap.secondPlayerSelectedForSwap(playerTitle);
+                break;
             default:
                 streamDeck.logger.error("Player Picker called from an unknown source: " + globalSettings.playerPickerCaller);
                 break;
@@ -132,10 +141,6 @@ export class PlayerSelector extends SingletonAction {
         const availableButtons = rows * columns;
         const endOfPageIndex = availableButtons * (PlayerSelector.currentPage + 1);
         let players: Player[] = await PlayerSelector.playerCache;
-        if (!players) { 
-            await PlayerSelector.updatePlayerCache(); 
-            players = await PlayerSelector.playerCache;
-        } 
         PlayerSelector.pages = await Math.ceil(players.length / availableButtons);
         if (!players || players.length === 0) {
             ev.action.setTitle("Player Error");
@@ -186,12 +191,9 @@ export class PlayerSelector extends SingletonAction {
                     query Query {
                         players {
                             id
+                            type
                             streamData {
                                 title
-                            }
-                            driverData {
-                                driverNumber
-                                tla
                             }
                         }
                     }
@@ -207,7 +209,7 @@ export class PlayerSelector extends SingletonAction {
             let players = result.data.players as Player[];
             // filter the players if needed
             if (playerPickerDisplay === PlayerPickerDisplay.ONBOARDS_ONLY) {
-                players = players.filter((player) => player.driverData !== null);
+                players = players.filter((player) => player.type === PlayerType.OBC);
             }
             PlayerSelector.playerCache = players.sort(PlayerSelector.playerSort);
         } catch (error) {
@@ -216,11 +218,10 @@ export class PlayerSelector extends SingletonAction {
         }
     }
 
-
     /**
-     * Sorts the players by id and driverData
+     * Sorts the players by id and type
      * 
-     * Non driver players < driver players
+     * type=ADDITIONAL < type=OBC
      * then by lower id < higher id
      * 
      * @param a the first player to compare
@@ -229,12 +230,116 @@ export class PlayerSelector extends SingletonAction {
      * @returns a number that represents the order of the two players
      */
     private static playerSort(a: Player, b: Player): number {
-        if (a.driverData === null && b.driverData !== null) {
+        if (a.type === PlayerType.ADDITIONAL && b.type === PlayerType.OBC) {
             return -1;
-        } else if (a.driverData !== null && b.driverData === null) {
+        } else if (a.type === PlayerType.OBC && b.type === PlayerType.ADDITIONAL) {
             return 1;
         } else {
             return parseInt(a.id) - parseInt(b.id);
+        }
+    }
+
+    /**
+     * Get the players that are possible and sorts them.
+     * used for the second player selection in the swap action
+     * 
+     * @returns The list of players sorted by id.
+     */
+    static async updatePlayerCacheToPossiblePlayers(): Promise<void> {
+        const players: Player[] = [];
+        await this.updatePlayerCache();
+        const openPlayers = await PlayerSelector.playerCache as Player[];
+        const openPlayerTitles: string[] = openPlayers.map((player) => player.streamData?.title).filter((title): title is string => title !== undefined);
+
+        // add the already open players to the list
+        players.push(...openPlayers);
+
+        // get all other types of players and add them to the list if they are not already present
+        // add the additional players (non-obc)
+        for (const playerTitle of NON_OBC_POSSIBLE_STREAMS) {
+            if (!openPlayerTitles.includes(playerTitle)) {
+                const newPlayer: Player = {
+                    streamData: { title: playerTitle },
+                    id: "",
+                    type: PlayerType.ADDITIONAL,
+                    bounds: { x: 0, y: 0, width: 0, height: 0 },
+                    fullscreen: false,
+                    alwaysOnTop: false,
+                    maintainAspectRatio: false
+                };
+                players.push(newPlayer);
+            }
+        }
+        // add the other obc possible players
+        try {
+            gql_client.query({
+                query: gql`
+                query Query {
+                    f1LiveTimingState {
+                        DriverList
+                    }
+                }
+            `,
+            }).then((result) => {
+                if (result.errors) {
+                    streamDeck.logger.error("Error getting possible players for player selector: " + JSON.stringify(result.errors));
+                    PlayerSelector.playerCache = [];
+                    return;
+                }
+                
+                const driverList = result.data.f1LiveTimingState.DriverList as JSONObject[];
+                const driverTLAs: string[] = [];
+                for (const driver of Object.values(driverList)) {
+                    driverTLAs.push(driver.Tla as string);
+                }
+                for (const tla of driverTLAs) {
+                    if (!openPlayerTitles.includes(tla)) {
+                        const newPlayer: Player = {
+                            streamData: { title: tla },
+                            id: "",
+                            type: PlayerType.OBC,
+                            bounds: { x: 0, y: 0, width: 0, height: 0 },
+                            fullscreen: false,
+                            alwaysOnTop: false,
+                            maintainAspectRatio: false
+                        };
+                        players.push(newPlayer);
+                    }
+                }
+
+                //  sort and set the possible players
+                PlayerSelector.playerCache = players.sort((a, b) => PlayerSelector.possiblePlayerSort(a, b, openPlayerTitles));
+            })
+        } catch (error) {
+            streamDeck.logger.error("Error getting possible players for player selector: " + JSON.stringify(error));
+            PlayerSelector.playerCache = [];
+        }
+    }
+
+    /**
+     * Sorts the players by open and type
+     * 
+     * Non driver players < driver players
+     * Open players < not open players
+     * 
+     * @param a the first player to compare
+     * @param b the second player to compare
+     * 
+     * @returns a number that represents the order of the two players
+     */
+    private static possiblePlayerSort(a: Player, b: Player, openPlayerTitles: string[]): number {
+        if (a.type === PlayerType.ADDITIONAL && b.type === PlayerType.OBC) {
+            return -1;
+        } else if (a.type === PlayerType.OBC && b.type === PlayerType.ADDITIONAL) {
+            return 1;
+        } else { 
+            if (a.streamData?.title && b.streamData?.title && openPlayerTitles.includes(a.streamData.title) && !openPlayerTitles.includes(b.streamData.title)) {
+                return -1;
+            } else if (a.streamData?.title && b.streamData?.title && !openPlayerTitles.includes(a.streamData.title) && openPlayerTitles.includes(b.streamData.title)) {
+                return 1;
+            } else {
+                return (a.streamData?.title ?? "").localeCompare(b.streamData?.title ?? "");
+            }
         }
     }
 

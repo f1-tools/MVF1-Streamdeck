@@ -3,7 +3,7 @@ import { GlobalSettings, PlayerPickerCaller, PlayerPickerDisplay } from "../glob
 import { switchToPlayerPickerProfile } from "../helpers";
 import { gql_client } from "../graphql";
 import { gql } from "@apollo/client";
-import { Player } from "../mv-types";
+import { Player, PlayerType } from "../mv-types";
 
 type Settings = {
     global: boolean; // whether to toggle all players or just the selected player
@@ -28,11 +28,8 @@ export class Speedometer extends SingletonAction<Settings> {
             query: gql`
                 query Query {
                     players {
-                        driverData {
-                            driverNumber
-                            tla
-                        }
                         id
+                        type
                     }
                 }
             `,
@@ -44,7 +41,7 @@ export class Speedometer extends SingletonAction<Settings> {
 
             const players = result.data.players as Player[];
             // get the onboard players
-            const onboardPlayers = players.filter((player) => player.driverData !== null);
+            const onboardPlayers = players.filter((player) => player.type === PlayerType.OBC);
             // get the ids of the onboard players
             const onboardPlayerIds = onboardPlayers.map((player) => player.id);
             

@@ -34,7 +34,7 @@ export const testMVConnection = async function () {
                 streamDeck.logger.error("Error connecting to MV: " + JSON.stringify(result.errors));
                 return false;
             }
-            streamDeck.logger.info("Connected to MV: " + JSON.stringify(result.data));
+            streamDeck.logger.trace("Connected to MV: " + JSON.stringify(result.data));
             return true;
         }).catch((error) => {
             streamDeck.logger.error("Error connecting to MV: " + error);

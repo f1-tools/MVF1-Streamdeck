@@ -183,6 +183,21 @@
 					"Image": "imgs/actions/PNG/volume_down"
 				}
 			]
+		},
+		{
+			"Name": "Swap Players",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.swap",
+			"Icon": "imgs/actions/PNG/swap_players",
+			"Tooltip": "Swap a player to a different stream",
+			"PropertyInspectorPath": "ui/swap.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/swap_players"
+				}
+			]
 		}
 	],
 	"Category": "MultiViewer",
