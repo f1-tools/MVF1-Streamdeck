@@ -17,7 +17,7 @@
 					"Image": "imgs/actions/PNG/blank"
 				}
 			],
-			"VisibleInActionsList": false
+			"VisibleInActionsList": true
 		},
 		{
 			"Name": "Sync",
@@ -227,10 +227,10 @@
 	"Profiles": [
 		{
 			"Name": "MV Player Picker - StreamDeckPlus",
-            "DeviceType": 7,
-            "Readonly": true,
-            "DontAutoSwitchWhenInstalled": true,
-            "AutoInstall": true		
+			"DeviceType": 7,
+			"Readonly": true,
+			"DontAutoSwitchWhenInstalled": true,
+			"AutoInstall": true
 		}
-	]	
+	]
 }
