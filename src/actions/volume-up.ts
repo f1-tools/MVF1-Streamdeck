@@ -3,7 +3,7 @@ import { changeAllPlayersVolumeBy, changePlayerVolumeBy, switchToPlayerPickerPro
 import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
 type Settings = {
-    global: boolean; // whether to increase all players or just the selected player
+    global: string; // "AP" (all players) or "SP" (selected player)
     nPercent: number; // the percent to increase by
 };
 
@@ -13,8 +13,9 @@ export class VolumeUp extends SingletonAction<Settings> {
 
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
         const settings = await ev.action.getSettings();
-        if (settings.global) {
-            this.globalVolumeUp(VolumeUp.nPercent ?? 10);
+        settings.global = settings.global === undefined ? "SP" : settings.global;
+        if (settings.global === "AP") {
+            this.globalVolumeUp(VolumeUp.nPercent ?? 25);
         } else {
             this.openPlayerSelectorForVolumeUp(ev);
         }
@@ -55,6 +56,6 @@ export class VolumeUp extends SingletonAction<Settings> {
      * @param playerId The id of the player to seek.
      */
     public static async playerSelectedForVolumeUp(playerId: string) {
-        changePlayerVolumeBy(playerId, VolumeUp.nPercent ?? 10);
+        changePlayerVolumeBy(playerId, VolumeUp.nPercent ?? 25);
     }
 }

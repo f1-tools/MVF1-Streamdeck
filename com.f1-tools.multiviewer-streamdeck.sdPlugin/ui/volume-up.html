@@ -11,8 +11,11 @@
     <!--
         Learn more about property inspector components at https://sdpi-components.dev/docs/components
     -->
-    <sdpi-item label="Global">
-        <sdpi-checkbox setting="global" default="false" label="If action should effect all players"></sdpi-checkbox>
+    <sdpi-item label="Effects">
+        <sdpi-select setting="global" placeholder="Select Scope">
+            <option value="SP">Selected Player</option>
+            <option value="AP">All Players</option>
+        </sdpi-checkbox>
     </sdpi-item>
     <sdpi-item label="Increment By">
         <sdpi-range setting="nPercent" min="10" max="50" step="5" default="25" showlabels></sdpi-range>
@@ -21,9 +24,12 @@
         The Volume Up action will increase the volume of all players or a single player by the percentage specified above. 
         Editing the volume of any player also turns off mute on it.
         <br><br>
-        If global is checked the action will effect all players.
+        If effects all players the action will effect all players.
         <br><br>
-        If global is unchecked it opens the player selector to allow you to choose which player to increase the volume on.
+        If effects the selected player it opens the player selector to allow you to choose which player to 
+        increase the volume on.
+        <br><br>
+        If neither option is selected the action will increase the volume of the selected player.
     </sdpi-item>
 </body>
 

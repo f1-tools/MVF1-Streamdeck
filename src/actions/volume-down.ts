@@ -3,7 +3,7 @@ import { changeAllPlayersVolumeBy, changePlayerVolumeBy, switchToPlayerPickerPro
 import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
 type Settings = {
-    global: boolean; // whether to decrease all players or just the selected player
+    global: string; // "AP" (all players) or "SP" (selected player)
     nPercent: number; // the percent to decrease by
 };
 
@@ -13,8 +13,9 @@ export class VolumeDown extends SingletonAction<Settings> {
 
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
         const settings = await ev.action.getSettings();
-        if (settings.global) {
-            this.globalVolumeDown(VolumeDown.nPercent ?? 10);
+        settings.global = settings.global === undefined ? "SP" : settings.global;
+        if (settings.global === "AP") {
+            this.globalVolumeDown(VolumeDown.nPercent ?? 25);
         } else {
             this.openPlayerSelectorForVolumeDown(ev);
         }
@@ -55,6 +56,6 @@ export class VolumeDown extends SingletonAction<Settings> {
      * @param playerId The id of the player to seek.
      */
     public static async playerSelectedForVolumeDown(playerId: string) {
-        changePlayerVolumeBy(playerId, -(VolumeDown.nPercent ?? 10));
+        changePlayerVolumeBy(playerId, -(VolumeDown.nPercent ?? 25));
     }
 }

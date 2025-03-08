@@ -11,16 +11,21 @@
     <!--
         Learn more about property inspector components at https://sdpi-components.dev/docs/components
     -->
-    <sdpi-item label="Global">
-        <sdpi-checkbox setting="global" default="false" label="If action should effect all players"></sdpi-checkbox>
+    <sdpi-item label="Effects">
+        <sdpi-select setting="global" placeholder="Select Scope">
+            <option value="SP">Selected Player</option>
+            <option value="AP">All Players</option>
+        </sdpi-checkbox>
     </sdpi-item>
     <sdpi-item label="Info">
-        The mute action will mute the audio of all players or the selected player.
+        The mute action will mute the audio of all players or the selected player, when unmuted the previous volume is maintained.
         <br><br>
-        If global is checked the action will toggle mute on all players. The mute state players are set to is the opposite 
+        If effects all players the action will toggle mute on all players. The mute state players are set to is the opposite 
         of the current state of the highest priority player (International > F1 Live > Oldest Player).
         <br><br>
-        If global is unchecked the action will toggle mute on the player selected in the player picker.
+        If effects teh selected player the action will toggle mute on the player selected in the player picker.
+        <br><br>
+        If neither option is selected the action will toggle mute on the selected player.
     </sdpi-item>
 </body>
 
