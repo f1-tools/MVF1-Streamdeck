@@ -6,14 +6,15 @@ import { gql } from "@apollo/client";
 import { Player, PlayerType } from "../mv-types";
 
 type Settings = {
-    global: boolean; // whether to toggle all players or just the selected player
+    global: string; // "AP" (all players) or "SP" (selected player)
 };
 
 @action({ UUID: "com.f1-tools.multiviewer-streamdeck.speedometer" })
 export class Speedometer extends SingletonAction<Settings> {
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
         const settings = await ev.action.getSettings();
-        if (settings.global) {
+        settings.global = settings.global === undefined ? "AP" : settings.global;
+        if (settings.global === "AP") {
             this.globalSpeedometerToggle();
         } else {
             this.openPlayerSelectorForSpeedometer(ev);

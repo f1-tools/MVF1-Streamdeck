@@ -11,16 +11,22 @@
     <!--
         Learn more about property inspector components at https://sdpi-components.dev/docs/components
     -->
-    <sdpi-item label="Global">
-        <sdpi-checkbox setting="global" default="true" label="If action should effect all players"></sdpi-checkbox>
+    <sdpi-item label="Effects">
+        <sdpi-select setting="global" placeholder="Select Scope">
+            <option value="AP">All Players</option>
+            <option value="SP">Selected Player</option>
+        </sdpi-checkbox>
     </sdpi-item>
     <sdpi-item label="Info">
         The Speedometer action will toggle the speedometer on all onboard camera players or a single onboard camera player.
         <br><br>
-        If global is checked all players will toggle their speedometer. It is NOT guaranteed that all players will 
+        If effects all players it will toggle all players speedometers. It is NOT guaranteed that all players will 
         toggle to the same value, they will toggle to the opposite of whatever each player was previously.
         <br><br>
-        If global is unchecked it opens the player selector to allow you to choose which player to toggle the speedometer on.
+        If effects the selected player it opens the player selector to allow you to choose which player to toggle the 
+        speedometer on.
+        <br><br>
+        If neither option is selected the action will toggle all players speedometers.
     </sdpi-item>
 </body>
 
