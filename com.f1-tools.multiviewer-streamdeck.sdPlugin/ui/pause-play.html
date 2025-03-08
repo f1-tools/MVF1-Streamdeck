@@ -11,20 +11,27 @@
     <!--
         Learn more about property inspector components at https://sdpi-components.dev/docs/components
     -->
-    <sdpi-item label="Global">
-        <sdpi-checkbox setting="global" default="true" label="If the action should effect all players"></sdpi-checkbox>
+    <sdpi-item label="Effects">
+        <sdpi-select setting="global" placeholder="Select Scope">
+            <option value="AP">All Players</option>
+            <option value="SP">Selected Player</option>
+        </sdpi-checkbox>
     </sdpi-item>
-    <sdpi-item label="Sync after every Play/Pause">
-        <sdpi-checkbox setting="sync" default="true" label="Defaults to false if global is unchecked"></sdpi-checkbox>
+    <sdpi-item label="Sync">
+        <sdpi-select setting="sync" placeholder="Select Sync Type">
+            <option value="AE">After every Play/Pause</option>
+            <option value="N">Never</option>
+        </sdpi-checkbox>
     </sdpi-item>
     <sdpi-item label="Info">
-        The Play/Pause action allows you to toggle the play/pause state of either all of the players (Global, checked) 
+        The Play/Pause action allows you to toggle the play/pause state of either all of the players 
         or a single player that is selected in the player selector that appears after the action 
-        is triggered (Global, unchecked). 
+        is triggered. If neither option is selected the action will play/pause all players.
         <br><br>
-        If the action is global then the sync setting will determine if there is an automatic sync after the play/pause
+        If the action is effecting all players then the Sync setting will determine if there is an automatic sync after the play/pause
         action is triggered. This setting is useful because the pause/play action does NOT effect the live timing data stream, 
-        but a sync will pause/play the live timing data stream to match the players.
+        but a sync will pause/play the live timing data stream to match the players. If neither option is selected the action will
+        sync after every play/pause.
     </sdpi-item>
 </body>
 

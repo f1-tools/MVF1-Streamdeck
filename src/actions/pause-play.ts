@@ -6,8 +6,8 @@ import { getPlayerWithPriority, switchToPlayerPickerProfile, syncPlayersToPlayer
 import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
 type Settings = {
-	global: boolean; // whether to apply the action to all players or to open the player selector profile
-	sync: boolean; // whether to sync players after the play/pause action
+	global: string; // "AP" (All Players) or "SP" (selected player)
+	sync: string; // "AE" (After every) or "N" (never)
 };
 
 @action({ UUID: "com.f1-tools.multiviewer-streamdeck.pause-play" })
@@ -15,7 +15,9 @@ export class PausePlay extends SingletonAction<Settings> {
 
 	override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
 		const settings = await ev.action.getSettings();
-		if (settings.global) {
+		settings.global = settings.global === undefined ? "AP" : settings.global;
+		settings.sync = settings.sync === undefined ? "AE" : settings.sync;
+		if (settings.global === "AP") {
 			this.globalPlayPause(settings.sync);
 		} else {
 			this.openPlayerSelectorForPlayPause(ev);
@@ -27,7 +29,7 @@ export class PausePlay extends SingletonAction<Settings> {
 	 * 
 	 * @param sync whether to sync players after the play/pause action
 	 */
-	private async globalPlayPause(sync: boolean) {
+	private async globalPlayPause(sync: string) {
 		let playerWithPriority: Player;
 		// get the current state of the commentary player or oldest player 
 		gql_client
@@ -81,7 +83,7 @@ export class PausePlay extends SingletonAction<Settings> {
 						});
 				});
 				
-				if (sync) {
+				if (sync === "AE") {
 					syncPlayersToPlayer(playerWithPriority.id);
 				}
 		}).catch((error) => {
