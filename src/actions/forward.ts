@@ -3,7 +3,7 @@ import { repeatSeekAsync, seekPlayerBySeconds, switchToPlayerPickerProfile } fro
 import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
 type Settings = {
-    global: boolean; // whether to seek all players or just the selected player
+    global: string; // "AP" (all players) or "SP" (selected player)
     nSeconds: number; // the number of seconds to seek by
 };
 
@@ -14,7 +14,8 @@ export class Forward extends SingletonAction<Settings> {
 
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
         const settings = await ev.action.getSettings();
-        if (settings.global) {
+        settings.global = settings.global === undefined ? "AP" : settings.global;
+        if (settings.global === "AP") {
             this.pressed.value = true;
             this.globalForward(Forward.nSeconds ?? 10);
         } else {
