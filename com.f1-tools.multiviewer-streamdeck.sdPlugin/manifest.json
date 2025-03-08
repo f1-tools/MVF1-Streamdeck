@@ -231,6 +231,20 @@
 			"Readonly": true,
 			"DontAutoSwitchWhenInstalled": true,
 			"AutoInstall": true
+		},
+		{
+			"Name": "MV Player Picker - [StreamDeckNeo]",
+			"DeviceType": 9,
+			"Readonly": true,
+			"DontAutoSwitchWhenInstalled": true,
+			"AutoInstall": true
+		},
+		{
+			"Name": "MV Player Picker - [StreamDeckXL]",
+			"DeviceType": 2,
+			"Readonly": true,
+			"DontAutoSwitchWhenInstalled": true,
+			"AutoInstall": true
 		}
 	]
 }

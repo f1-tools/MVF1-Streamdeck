@@ -156,6 +156,12 @@ export async function switchToPlayerPickerProfile(device: Device,
         case DeviceType.StreamDeckPlus:
             profileString = "MV Player Picker - StreamDeckPlus";
             break;
+        case DeviceType.StreamDeckXL:
+            profileString = "MV Player Picker - [StreamDeckXL]";
+            break;
+        case DeviceType.StreamDeckNeo:
+            profileString = "MV Player Picker - [StreamDeckNeo]";
+            break;
         default:
             streamDeck.logger.error("No Profile for " + device.name + " with type " + device.type + ". Contact the developer to get one added.");
             return;
