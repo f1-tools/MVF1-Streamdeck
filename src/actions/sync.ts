@@ -6,15 +6,16 @@ import { getPlayerWithPriority, switchToPlayerPickerProfile, syncPlayersToPlayer
 import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
 type Settings = {
-    standard: boolean; // whether to allow the user to select a player to sync to
+    standard: string; // HPP (highest priority player) or SP (selected player)
 };
 
 @action({ UUID: "com.f1-tools.multiviewer-streamdeck.sync" })
-export class Sync extends SingletonAction {
+export class Sync extends SingletonAction<Settings> {
 
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
         const settings = await ev.action.getSettings();
-        if (settings.standard) {
+        settings.standard = settings.standard === undefined ? "HPP" : settings.standard;
+        if (settings.standard === "HPP") {
             this.standardSync();
         } else {
             this.openPlayerSelectorForSync(ev);

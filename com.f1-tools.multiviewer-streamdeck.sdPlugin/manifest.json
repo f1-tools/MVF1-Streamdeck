@@ -155,21 +155,6 @@
 			]
 		},
 		{
-			"Name": "Volume Up",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.volume-up",
-			"Icon": "imgs/actions/PNG/volume_up",
-			"Tooltip": "Increase volume of player(s)",
-			"PropertyInspectorPath": "ui/volume-up.html",
-			"Controllers": [
-				"Keypad"
-			],
-			"States": [
-				{
-					"Image": "imgs/actions/PNG/volume_up"
-				}
-			]
-		},
-		{
 			"Name": "Volume Down",
 			"UUID": "com.f1-tools.multiviewer-streamdeck.volume-down",
 			"Icon": "imgs/actions/PNG/volume_down",
@@ -181,6 +166,21 @@
 			"States": [
 				{
 					"Image": "imgs/actions/PNG/volume_down"
+				}
+			]
+		},
+		{
+			"Name": "Volume Up",
+			"UUID": "com.f1-tools.multiviewer-streamdeck.volume-up",
+			"Icon": "imgs/actions/PNG/volume_up",
+			"Tooltip": "Increase volume of player(s)",
+			"PropertyInspectorPath": "ui/volume-up.html",
+			"Controllers": [
+				"Keypad"
+			],
+			"States": [
+				{
+					"Image": "imgs/actions/PNG/volume_up"
 				}
 			]
 		},
