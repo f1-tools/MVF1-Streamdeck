@@ -244,6 +244,20 @@
 			"Readonly": true,
 			"DontAutoSwitchWhenInstalled": true,
 			"AutoInstall": true
+		},
+		{
+			"Name": "MV Player Picker - SD Mini",
+			"DeviceType": 1,
+			"Readonly": true,
+			"DontAutoSwitchWhenInstalled": true,
+			"AutoInstall": true
+		},
+		{
+			"Name": "MV Player Picker - SD MK",
+			"DeviceType": 0,
+			"Readonly": true,
+			"DontAutoSwitchWhenInstalled": true,
+			"AutoInstall": true
 		}
 	]
 }
