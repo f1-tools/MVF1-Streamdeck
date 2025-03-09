@@ -1,5 +1,5 @@
 import streamDeck, { action, KeyDownEvent, SingletonAction } from "@elgato/streamdeck";
-import { GlobalSettings, PlayerPickerCaller, PlayerPickerDisplay } from "../global-types";
+import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 import { getPlayerWithPriority, switchToPlayerPickerProfile } from "../helpers";
 import { gql_client } from "../graphql";
 import { gql } from "@apollo/client";

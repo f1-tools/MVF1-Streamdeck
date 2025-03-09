@@ -1,6 +1,6 @@
 {
 	"Name": "MultiViewer",
-	"Version": "2.0.1.0",
+	"Version": "2.0.2.0",
 	"Author": "F1-Tools",
 	"Actions": [
 		{
@@ -8,7 +8,6 @@
 			"UUID": "com.f1-tools.multiviewer-streamdeck.player-selector",
 			"Icon": "imgs/actions/PNG/blank",
 			"Tooltip": "Selects a player to control",
-			"PropertyInspectorPath": "ui/sync.html",
 			"Controllers": [
 				"Keypad"
 			],

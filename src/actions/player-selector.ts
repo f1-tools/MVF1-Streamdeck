@@ -172,9 +172,41 @@ export class PlayerSelector extends SingletonAction {
                     const player = players[playerIndex];
                     ev.action.setTitle(player.streamData?.title ?? "Title Error");
                     ev.action.setSettings({ title: player.streamData?.title ?? "Title Error" });
-                    ev.action.setImage("imgs/actions/PNG/blank.png"); // TODO driver head shot instead
+                    PlayerSelector.setImageForPlayer(ev, player.streamData?.title ?? "Title Error", player.type);
                     return;
                 }
+            }
+        }
+    }
+
+    /**
+     * Sets the image for the player selector based on the type of player
+     * 
+     * @param ev the event that triggered the action that holds all the needed information
+     * @param title the title of the player
+     * @param type the type of player
+     * 
+     * ["INTERNATIONAL", "F1 LIVE", "TRACKER", "DATA"];
+     */
+    private static async setImageForPlayer(ev: WillAppearEvent<Settings> | KeyDownEvent<Settings>, title: string, type: PlayerType) {
+        if (type === PlayerType.OBC) {
+            try {
+                ev.action.setImage("imgs/player-picker-icons/" + title + ".png");
+            } catch (error) {
+                streamDeck.logger.trace("image not found when setting image for player selector: " + title);
+                ev.action.setImage("imgs/actions/PNG/blank.png");
+            }
+        } else { // type === PlayerType.ADDITIONAL
+            if (title === NON_OBC_POSSIBLE_STREAMS[0]) { // "INTERNATIONAL"
+                ev.action.setImage("imgs/actions/PNG/globe.png");
+            } else if (title === NON_OBC_POSSIBLE_STREAMS[1]) { // "F1 LIVE"
+                ev.action.setImage("imgs/actions/PNG/cam.png");
+            } else if (title === NON_OBC_POSSIBLE_STREAMS[2]) { // "TRACKER"
+                ev.action.setImage("imgs/actions/PNG/track_map.png");
+            } else if (title === NON_OBC_POSSIBLE_STREAMS[3]) { // "DATA"
+                ev.action.setImage("imgs/actions/PNG/data.png");
+            } else {
+                ev.action.setImage("imgs/actions/PNG/blank.png");
             }
         }
     }
