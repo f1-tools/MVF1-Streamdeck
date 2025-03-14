@@ -5,7 +5,7 @@ import { Player } from "../mv-types";
 import { getPlayerWithPriority, switchToPlayerPickerProfile, syncPlayersToPlayer } from "../helpers";
 import { GlobalSettings, PlayerPickerCaller } from "../global-types";
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.fullscreen" })
+@action({ UUID: "com.f1-tools.mvf1.fullscreen" })
 export class Fullscreen extends SingletonAction {
 
     override async onKeyDown(ev: KeyDownEvent): Promise<void> {

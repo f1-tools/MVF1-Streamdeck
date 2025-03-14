@@ -9,7 +9,7 @@ type Settings = {
     global: string; // "AP" (all players) or "SP" (selected player)
 };
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.speedometer" })
+@action({ UUID: "com.f1-tools.mvf1.speedometer" })
 export class Speedometer extends SingletonAction<Settings> {
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
         const settings = await ev.action.getSettings();

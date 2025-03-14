@@ -154,20 +154,20 @@ export async function switchToPlayerPickerProfile(device: Device,
     let profileString = "";
     switch (device.type) {
         case DeviceType.StreamDeckPlus:
-            profileString = "MV Player Picker - StreamDeckPlus";
+            profileString = "MV Player Picker - SD Plus";
             break;
-        case DeviceType.StreamDeckXL:
-            profileString = "MV Player Picker - [StreamDeckXL]";
-            break;
-        case DeviceType.StreamDeckNeo:
-            profileString = "MV Player Picker - [StreamDeckNeo]";
-            break;
-        case DeviceType.StreamDeckMini:
-            profileString = "MV Player Picker - SD Mini";
-            break;
-        case DeviceType.StreamDeck:
-            profileString = "MV Player Picker - SD MK";
-            break;
+        // case DeviceType.StreamDeckXL:
+        //     profileString = "MV Player Picker - [StreamDeckXL]";
+        //     break;
+        // case DeviceType.StreamDeckNeo:
+        //     profileString = "MV Player Picker - [StreamDeckNeo]";
+        //     break;
+        // case DeviceType.StreamDeckMini:
+        //     profileString = "MV Player Picker - SD Mini";
+        //     break;
+        // case DeviceType.StreamDeck:
+        //     profileString = "MV Player Picker - SD MK";
+        //     break;
         default:
             streamDeck.logger.error("No Profile for " + device.name + " with type " + device.type + ". Contact the developer to get one added.");
             return;

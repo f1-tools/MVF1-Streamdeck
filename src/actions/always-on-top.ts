@@ -6,7 +6,7 @@ import { gql_client } from "../graphql";
 import { Player } from "../mv-types";
 
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.always-on-top" })
+@action({ UUID: "com.f1-tools.mvf1.always-on-top" })
 export class AlwaysOnTop extends SingletonAction {
 
     override async onKeyDown(ev: KeyDownEvent): Promise<void> {

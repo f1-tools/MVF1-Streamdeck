@@ -29,7 +29,7 @@ type Settings = {
  * By default, it only displays the open players so that they can be selected.
  */
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.player-selector" })
+@action({ UUID: "com.f1-tools.mvf1.player-selector" })
 export class PlayerSelector extends SingletonAction {
     private static playerCache: Player[];
     public static currentPage: number = 0;
@@ -52,7 +52,7 @@ export class PlayerSelector extends SingletonAction {
         if (localSettings.title === " ") {
             await PlayerSelector.currentPage++;
             streamDeck.actions.forEach((action) => {
-                if (action.manifestId === "com.f1-tools.multiviewer-streamdeck.player-selector") {
+                if (action.manifestId === "com.f1-tools.mvf1.player-selector") {
                     PlayerSelector.updateButtonUI(PlayerSelector.buildFakeEventForUpdateButtons(action));
                 }
             });
@@ -127,6 +127,7 @@ export class PlayerSelector extends SingletonAction {
      * @param ev 
      */
     override async onWillAppear(ev: WillAppearEvent<Settings>): Promise<void> {
+        streamDeck.logger.info("Player Selector onWillAppear, players: " + JSON.stringify(PlayerSelector.playerCache));
         PlayerSelector.updateButtonUI(ev);
     }
 
@@ -136,6 +137,7 @@ export class PlayerSelector extends SingletonAction {
      * @param ev the event that triggered the action that holds all the needed information
      */
     private static async updateButtonUI(ev: WillAppearEvent<Settings> | KeyDownEvent<Settings>) {
+        streamDeck.logger.info("Updating player selector buttons players: " + JSON.stringify(PlayerSelector.playerCache));
         const rows = ev.action.device.size.rows;
         const columns = ev.action.device.size.columns; 
         const availableButtons = rows * columns;

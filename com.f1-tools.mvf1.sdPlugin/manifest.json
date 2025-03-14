@@ -5,7 +5,7 @@
 	"Actions": [
 		{
 			"Name": "Player Selector",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.player-selector",
+			"UUID": "com.f1-tools.mvf1.player-selector",
 			"Icon": "imgs/actions/PNG/blank",
 			"Tooltip": "Selects a player to control",
 			"Controllers": [
@@ -20,7 +20,7 @@
 		},
 		{
 			"Name": "Sync",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.sync",
+			"UUID": "com.f1-tools.mvf1.sync",
 			"Icon": "imgs/actions/PNG/sync",
 			"Tooltip": "Syncs all players",
 			"PropertyInspectorPath": "ui/sync.html",
@@ -35,7 +35,7 @@
 		},
 		{
 			"Name": "Play/Pause",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.pause-play",
+			"UUID": "com.f1-tools.mvf1.pause-play",
 			"Icon": "imgs/actions/PNG/play_pause",
 			"Tooltip": "Pauses or plays all players, or a selected player",
 			"PropertyInspectorPath": "ui/pause-play.html",
@@ -50,7 +50,7 @@
 		},
 		{
 			"Name": "Rewind",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.rewind",
+			"UUID": "com.f1-tools.mvf1.rewind",
 			"Icon": "imgs/actions/PNG/rewind",
 			"Tooltip": "Rewinds player(s)",
 			"PropertyInspectorPath": "ui/rewind.html",
@@ -65,7 +65,7 @@
 		},
 		{
 			"Name": "Fast Forward",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.forward",
+			"UUID": "com.f1-tools.mvf1.forward",
 			"Icon": "imgs/actions/PNG/forward",
 			"Tooltip": "Fast forwards player(s)",
 			"PropertyInspectorPath": "ui/forward.html",
@@ -80,7 +80,7 @@
 		},
 		{
 			"Name": "Toggle Speedometer",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.speedometer",
+			"UUID": "com.f1-tools.mvf1.speedometer",
 			"Icon": "imgs/actions/PNG/speedometer_one",
 			"Tooltip": "Toggle the speedometer on driver cam player(s)",
 			"PropertyInspectorPath": "ui/speedometer.html",
@@ -95,7 +95,7 @@
 		},
 		{
 			"Name": "Cycle Header Mode",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.header",
+			"UUID": "com.f1-tools.mvf1.header",
 			"Icon": "imgs/actions/PNG/switch_header",
 			"Tooltip": "Cycle through driver header modes on driver cam player(s)",
 			"PropertyInspectorPath": "ui/header.html",
@@ -110,7 +110,7 @@
 		},
 		{
 			"Name": "Toggle Fullscreen",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.fullscreen",
+			"UUID": "com.f1-tools.mvf1.fullscreen",
 			"Icon": "imgs/actions/PNG/fullscreen",
 			"Tooltip": "Toggle if player is fullscreen",
 			"PropertyInspectorPath": "ui/fullscreen.html",
@@ -125,7 +125,7 @@
 		},
 		{
 			"Name": "Toggle Always On Top",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.always-on-top",
+			"UUID": "com.f1-tools.mvf1.always-on-top",
 			"Icon": "imgs/actions/PNG/on_top",
 			"Tooltip": "Toggle if player(s) are always on top",
 			"PropertyInspectorPath": "ui/always-on-top.html",
@@ -140,7 +140,7 @@
 		},
 		{
 			"Name": "Mute",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.mute",
+			"UUID": "com.f1-tools.mvf1.mute",
 			"Icon": "imgs/actions/PNG/mute",
 			"Tooltip": "Toggle mute of player(s)",
 			"PropertyInspectorPath": "ui/mute.html",
@@ -155,7 +155,7 @@
 		},
 		{
 			"Name": "Volume Down",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.volume-down",
+			"UUID": "com.f1-tools.mvf1.volume-down",
 			"Icon": "imgs/actions/PNG/volume_down",
 			"Tooltip": "Decrease volume of player(s)",
 			"PropertyInspectorPath": "ui/volume-down.html",
@@ -170,7 +170,7 @@
 		},
 		{
 			"Name": "Volume Up",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.volume-up",
+			"UUID": "com.f1-tools.mvf1.volume-up",
 			"Icon": "imgs/actions/PNG/volume_up",
 			"Tooltip": "Increase volume of player(s)",
 			"PropertyInspectorPath": "ui/volume-up.html",
@@ -185,7 +185,7 @@
 		},
 		{
 			"Name": "Swap Players",
-			"UUID": "com.f1-tools.multiviewer-streamdeck.swap",
+			"UUID": "com.f1-tools.mvf1.swap",
 			"Icon": "imgs/actions/PNG/swap_players",
 			"Tooltip": "Swap a player to a different stream",
 			"PropertyInspectorPath": "ui/swap.html",
@@ -222,39 +222,11 @@
 		"Version": "20",
 		"Debug": "enabled"
 	},
-	"UUID": "com.f1-tools.multiviewer-streamdeck",
+	"UUID": "com.f1-tools.mvf1",
 	"Profiles": [
 		{
-			"Name": "MV Player Picker - StreamDeckPlus",
+			"Name": "MV Player Picker - SD Plus",
 			"DeviceType": 7,
-			"Readonly": true,
-			"DontAutoSwitchWhenInstalled": true,
-			"AutoInstall": true
-		},
-		{
-			"Name": "MV Player Picker - [StreamDeckNeo]",
-			"DeviceType": 9,
-			"Readonly": true,
-			"DontAutoSwitchWhenInstalled": true,
-			"AutoInstall": true
-		},
-		{
-			"Name": "MV Player Picker - [StreamDeckXL]",
-			"DeviceType": 2,
-			"Readonly": true,
-			"DontAutoSwitchWhenInstalled": true,
-			"AutoInstall": true
-		},
-		{
-			"Name": "MV Player Picker - SD Mini",
-			"DeviceType": 1,
-			"Readonly": true,
-			"DontAutoSwitchWhenInstalled": true,
-			"AutoInstall": true
-		},
-		{
-			"Name": "MV Player Picker - SD MK",
-			"DeviceType": 0,
 			"Readonly": true,
 			"DontAutoSwitchWhenInstalled": true,
 			"AutoInstall": true

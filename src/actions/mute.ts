@@ -9,7 +9,7 @@ type Settings = {
     global: string; // "AP" (all players) or "SP" (selected player)
 };
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.mute" })
+@action({ UUID: "com.f1-tools.mvf1.mute" })
 export class Mute extends SingletonAction<Settings> {
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
         const settings = await ev.action.getSettings();

@@ -8,7 +8,7 @@ import { JSONObject, Player, PlayerType } from "../mv-types";
 import { gql_client } from "../graphql";
 import { PlayerSelector } from "./player-selector";
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.swap"})
+@action({ UUID: "com.f1-tools.mvf1.swap"})
 export class Swap extends SingletonAction {
     private static playerOneId: string = "-1";
     private static playerTwoTitle: string = "UNKNOWN";

@@ -6,7 +6,7 @@ import path from "node:path";
 import url from "node:url";
 
 const isWatching = !!process.env.ROLLUP_WATCH;
-const sdPlugin = "com.f1-tools.multiviewer-streamdeck.sdPlugin";
+const sdPlugin = "com.f1-tools.mvf1.sdPlugin";
 
 /**
  * @type {import('rollup').RollupOptions}

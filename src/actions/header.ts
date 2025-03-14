@@ -9,7 +9,7 @@ type Settings = {
     global: string; // "AP" (all players) or "SP" (selected player)
 };
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.header" })
+@action({ UUID: "com.f1-tools.mvf1.header" })
 export class Header extends SingletonAction<Settings> {
     // An ATTEMPT to keep track of players header state, will likely get out of sync but better than nothing
     private static playerHeaderStates: Map<string, DriverHeaderMode> = new Map<string, DriverHeaderMode>();

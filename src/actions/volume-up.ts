@@ -7,7 +7,7 @@ type Settings = {
     nPercent: number; // the percent to increase by
 };
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.volume-up" })
+@action({ UUID: "com.f1-tools.mvf1.volume-up" })
 export class VolumeUp extends SingletonAction<Settings> {
     private static nPercent: number; // Default to 10 percent if not set
 

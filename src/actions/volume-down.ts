@@ -7,7 +7,7 @@ type Settings = {
     nPercent: number; // the percent to decrease by
 };
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.volume-down" })
+@action({ UUID: "com.f1-tools.mvf1.volume-down" })
 export class VolumeDown extends SingletonAction<Settings> {
     private static nPercent: number; // Default to 10 percent if not set
 

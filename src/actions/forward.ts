@@ -7,7 +7,7 @@ type Settings = {
     nSeconds: number; // the number of seconds to seek by
 };
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.forward" })
+@action({ UUID: "com.f1-tools.mvf1.forward" })
 export class Forward extends SingletonAction<Settings> {
     private pressed = { value: false }; // So the value is passed by reference and we can change it onKeyUp
     private static nSeconds: number; // Default to 10 seconds if not set

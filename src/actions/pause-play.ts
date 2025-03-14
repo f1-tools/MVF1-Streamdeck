@@ -10,7 +10,7 @@ type Settings = {
 	sync: string; // "AE" (After every) or "N" (never)
 };
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.pause-play" })
+@action({ UUID: "com.f1-tools.mvf1.pause-play" })
 export class PausePlay extends SingletonAction<Settings> {
 
 	override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {

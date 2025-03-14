@@ -9,7 +9,7 @@ type Settings = {
     standard: string; // HPP (highest priority player) or SP (selected player)
 };
 
-@action({ UUID: "com.f1-tools.multiviewer-streamdeck.sync" })
+@action({ UUID: "com.f1-tools.mvf1.sync" })
 export class Sync extends SingletonAction<Settings> {
 
     override async onKeyDown(ev: KeyDownEvent<Settings>): Promise<void> {
